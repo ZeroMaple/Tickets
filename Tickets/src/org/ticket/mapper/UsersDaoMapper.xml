@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ticket.dao.UsersDao">
+	<select id="getUsersByUsersAccountAndUsersPassWord" parameterType="users" resultType="users">
+		<![CDATA[
+			SELECT * FROM tickets.users WHERE userAccount=#{userAccount,jdbcType=VARCHAR} AND userPassWord=#{userPassWord,jdbcType=VARCHAR}
+		]]>
+	</select>
+</mapper>

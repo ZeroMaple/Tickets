@@ -1,0 +1,87 @@
+body {
+    font-family: "微软雅黑";
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+header {
+    background-color: #555555;
+    height: 60px;
+}
+header > div{
+    float: left;
+    width: 2%;
+    margin: 10px 50px;
+}
+header > div > img {
+    width: 100%;
+}
+header > div:last-child {
+    width: 30%;
+    float: right;
+    text-align: center;
+    margin: 5px 20px;
+}
+
+/*search*/
+.search * {
+    position: absolute;
+    margin: 0; padding: 0;
+    left: 0;
+}
+#inputText {
+    border: 1px solid #ddd;
+    padding: 6px;
+    font-size: 18px;
+    width: 200px;
+    text-transform: uppercase;
+    top: 30px;
+    left: 130px;
+}
+
+input[type="submit"] {
+    display: block;
+    width: 100px;
+    border: 0;
+    line-height: 35px;
+    height: 35px;
+    color: #fff;
+    background: mediumpurple;
+    font-size: 18px;
+    top: 30px;
+    left: 350px;
+    cursor: pointer;
+}
+
+form {
+    width: 600px;
+    height: 100px;
+}
+
+
+/*bottom*/
+.bottom {
+    height: 300px;
+    position: absolute;
+    bottom: 0;
+}
+
+/*input*/
+
+.layui-layer-btn > a {
+    height: auto !important;
+    padding: 2% 10% !important;
+    margin: 0 20px !important;
+    font-size: 16px;
+    border:0;
+    -webkit-border-radius:  20px 0px 20px 0 !important;
+    -moz-border-radius: 20px 0px 20px 0 !important;
+    border-radius: 20px 0px 20px 0 !important;
+}
+
+header:after {
+    content: '\20';
+    display: block;
+    clear: both;
+}

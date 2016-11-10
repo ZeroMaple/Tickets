@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 别名 -->
+	<typeAliases>
+ 		<typeAlias type="org.ticket.bean.Admin" alias="admin"/>
+		<typeAlias type="org.ticket.bean.Orders" alias="orders"/>
+		<typeAlias type="org.ticket.bean.Sales" alias="sales"/>
+		<typeAlias type="org.ticket.bean.Ticket" alias="ticket"/>
+		<typeAlias type="org.ticket.bean.Users" alias="users"/>
+		<typeAlias type="org.ticket.bean.Warehouse" alias="warehouse"/>
+	</typeAliases>
+    <mappers>
+    	<mapper resource="org/ticket/mapper/UsersDaoMapper.xml"/>
+    </mappers>
+</configuration>
