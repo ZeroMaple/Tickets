@@ -29,24 +29,26 @@
             var icon = "<i class='fa fa-times-circle'></i> ";
             $("#signupForm").validate({
                 rules: {
-                    firstname: "required",
+                    userName: "required",
                     lastname: "required",
-                    username: {
+                    userAccount: {
                         required: true,
                         minlength: 2
                     },
-                    password: {
+                    userPassWord: {
                         required: true,
                         minlength: 5
                     },
                     confirm_password: {
                         required: true,
                         minlength: 5,
-                        equalTo: "#password"
+                        equalTo: "#userPassWord"
                     },
-                    email: {
-                        required: true,
-                        email: true
+                    address: {
+                        required: true
+                    },
+                    phone: {
+                        required: true
                     },
                     topic: {
                         required: "#newsletter:checked",
@@ -55,13 +57,12 @@
                     agree: "required"
                 },
                 messages: {
-                    firstname: icon + "请输入你的姓",
-                    lastname: icon + "请输入您的名字",
-                    username: {
-                        required: icon + "请输入您的用户名",
-                        minlength: icon + "用户名必须两个字符以上"
+                    userName: icon + "请输入站点名称",
+                    userAccount: {
+                        required: icon + "请输入账号",
+                        minlength: icon + "账号必须两个字符以上"
                     },
-                    password: {
+                    userPassWord: {
                         required: icon + "请输入您的密码",
                         minlength: icon + "密码必须5个字符以上"
                     },
@@ -70,9 +71,10 @@
                         minlength: icon + "密码必须5个字符以上",
                         equalTo: icon + "两次输入的密码不一致"
                     },
-                    email: icon + "请输入您的E-mail",
+                    address: icon + "请输入站点地址",
+                    phone: icon + "请输联系方式",
                     agree: {
-                        required: icon + "必须同意协议后才能注册",
+                        required: icon + "必须代理商相关信息后才能注册",
                         element: '#agree-error'
                     }
                 }

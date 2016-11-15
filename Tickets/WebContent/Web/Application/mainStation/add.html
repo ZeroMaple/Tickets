@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 表单验证 jQuery Validation</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../Resources/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../Resources/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../Resources/css/animate.css" rel="stylesheet">
+    <link href="../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加分站须知</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <p>在填写分站信息前请务必确认以下事件</p>
+                        <ul>
+                            <li>填写表单前请核实代理商信息</li>
+                            <li>请务必真实填写表单内容</li>
+                            <li>同地区严禁出现1家以上的代理商</li>
+                            <li>代理商信息表每一项均为必填项，请勿遗漏</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>代理商信息填写</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal m-t" id="signupForm">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">站点名称：</label>
+                                <div class="col-sm-8">
+                                    <input id="userName" name="userName" class="form-control" type="text">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>请慎重填写站点名称，已经提交无法修改</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">代理商账号：</label>
+                                <div class="col-sm-8">
+                                    <input id="userAccount" name="userAccount" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">代理商密码：</label>
+                                <div class="col-sm-8">
+                                    <input id="userPassWord" name="userPassWord" class="form-control" type="password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">确认密码：</label>
+                                <div class="col-sm-8">
+                                    <input id="confirm_password" name="confirm_password" class="form-control" type="password">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">站点地址</label>
+                                <div class="col-sm-8">
+                                    <input id="address" name="address" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">联系方式</label>
+                                <div class="col-sm-8">
+                                    <input id="phone" name="phone" class="form-control" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="checkbox" id="agree" name="agree"> 代理商已经提交相关信息资料
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-3">
+                                    <button class="btn btn-primary" type="submit" id="add">创建站点</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- 全局js -->
+    <script src="../../Resources/js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../Resources/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="../../Resources/js/content.js?v=1.0.0"></script>
+    <script>
+        //  AJAX
+        $("#add").click(function () {
+            var userName = $("#userName").val();
+            var userAccount = $("#userAccount").val();
+            var userPassWord = $("#userPassWord").val();
+            var userAddress = $("#address").val();
+            var userPhone = $("#phone").val();
+            if(userName == "" || userAccount == "" || userPassWord == "" || userAddress == "" || userPhone == ""){
+                return;
+            }else{
+                $.ajax({
+                    url:"http://Zero:8080/Tickets/Web/Application/registered.action",
+                    method:"POST",
+                    dataType:"jsonp",
+                    data:{
+                        userName:userName,
+                        userAccount:userAccount,
+                        userPassWord:userPassWord,
+                        userAddress:userAddress,
+                        userPhone:userPhone
+                    },
+                    success:function (data) {
+                        console.log(data);
+                        var ReturnVal = data;
+                        if(ReturnVal == false){
+                            $(".errorText").show();
+                        }
+                    },
+                    error:function (err) {
+                        console.error(err);
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="../../Resources/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="../../Resources/js/plugins/validate/messages_zh.min.js"></script>
+
+    <script src="../../Resources/js/demo/form-validate-demo.js"></script>
+
+    
+    
+
+</body>
+
+</html>
