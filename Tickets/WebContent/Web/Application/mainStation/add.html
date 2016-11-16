@@ -88,7 +88,7 @@
                                 <div class="col-sm-8 col-sm-offset-3">
                                     <div>
                                         <label>
-                                            <input type="checkbox" class="checkbox" name="agree"> 代理商已经提交相关信息资料
+                                            <input type="checkbox" class="checkbox" name="agree" id="agree"> 代理商已经提交相关信息资料
                                         </label>
                                     </div>
                                 </div>
@@ -114,6 +114,9 @@
     <!-- 自定义js -->
     <script src="../../Resources/js/content.js?v=1.0.0"></script>
     <script>
+        for(var i = 0; i < document.forms.length; i++) {
+            document.forms[i].onsubmit = function() {return false;}
+        }
         //  AJAX
         $("#add").click(function () {
             var userName = $("#userName").val();
@@ -121,9 +124,10 @@
             var userPassWord = $("#userPassWord").val();
             var userAddress = $("#address").val();
             var userPhone = $("#phone").val();
+            var isChecked = $("#agree").is(':checked');
             if(userName == "" || userAccount == "" || userPassWord == "" || userAddress == "" || userPhone == ""){
                 return;
-            }else{
+            }else if(isChecked){
                 $.ajax({
                     url:"http://Zero:8080/Tickets/Web/Application/registered.action",
                     method:"POST",

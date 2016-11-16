@@ -8,7 +8,7 @@
             },
             errorElement: "span",
             errorPlacement: function (error, element) {
-                if (element.is(":radio") || element.is(":checkbox")) {
+                if (element.is(":radio")) {
                     error.appendTo(element.parent().parent().parent());
                 } else {
                     error.appendTo(element.parent());
@@ -77,15 +77,6 @@
                         required: icon + "必须代理商相关信息后才能注册",
                         element: '#agree-error'
                     }
-                }
-            });
-
-            // propose username by combining first- and lastname
-            $("#username").focus(function () {
-                var firstname = $("#firstname").val();
-                var lastname = $("#lastname").val();
-                if (firstname && lastname && !this.value) {
-                    this.value = firstname + "." + lastname;
                 }
             });
         });
