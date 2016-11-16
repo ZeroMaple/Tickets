@@ -86,9 +86,9 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
-                                    <div class="checkbox">
+                                    <div>
                                         <label>
-                                            <input type="checkbox" class="checkbox" id="agree" name="agree"> 代理商已经提交相关信息资料
+                                            <input type="checkbox" class="checkbox" name="agree"> 代理商已经提交相关信息资料
                                         </label>
                                     </div>
                                 </div>
@@ -137,10 +137,6 @@
                     },
                     success:function (data) {
                         console.log(data);
-                        var ReturnVal = data;
-                        if(ReturnVal == false){
-                            $(".errorText").show();
-                        }
                     },
                     error:function (err) {
                         console.error(err);
