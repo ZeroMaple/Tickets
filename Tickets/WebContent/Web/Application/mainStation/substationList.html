@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 联系人</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../Resources/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../Resources/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="../../Resources/css/animate.css" rel="stylesheet">
+    <link href="../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="../../Resources/js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../Resources/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="../../Resources/js/content.js?v=1.0.0"></script>
+
+
+    <script>
+        $.ajax({
+            url:"http://Zero:8080/Tickets/Web/Application/viewUsers.action",
+            method:"POST",
+            dataType:"jsonp",
+            data:{},
+            success:function (data) {
+                console.log(data);
+                for(var i = 0;i < data.length;i++){
+                    var time = new Date(data[i].userDate);
+                    $(".row").append(
+                            $("<div></div>").attr("class","col-sm-4").append(
+                                    $("<div></div>").attr("class","contact-box").append(
+                                            $("<a></a>").attr("href","profile.html").append(
+                                                    $("<div></div>").attr("class","col-sm-4").append(
+                                                            $("<div></div>").attr("class","text-center").append(
+                                                                    $("<img>").attr("class","img-circle m-t-xs img-responsive").attr("src","../../Resources/img/house2.png")
+                                                            )
+                                                    )
+                                            ).append(
+                                                    $("<div></div>").attr("class","col-sm-8").append(
+                                                            $("<h3></h3>").append(
+                                                                    $("<strong></strong>").html(data[i].userName)
+                                                            )
+                                                    ).append(
+                                                            $("<p></p>").append(
+                                                                    $("<i></i>").attr("class","fa fa-map-marker")
+                                                            ).append(
+                                                                    $("<span></span>").html(data[i].userAddress)
+                                                            )
+                                                    ).append(
+                                                            $("<address></address>").append(
+                                                                    $("<strong></strong>").html("Baidu, Inc.")
+                                                            ).append(
+                                                                    $("<br />")
+                                                            ).append(
+                                                                    $("<span></span>").html("账号：" + data[i].userAccount)
+                                                            ).append(
+                                                                    $("<br />")
+                                                            ).append(
+                                                                    $("<span></span>").html("创建时间：" + time.toLocaleString())
+                                                            ).append(
+                                                                    $("<br />")
+                                                            ).append(
+                                                                    $("<abbr></abbr>").attr("title","Phone").html("Tel:")
+                                                            ).append(
+                                                                    $("<span></span>").html(data[i].userPhone)
+                                                            )
+                                                    )
+                                            ).append(
+                                                    $("<div></div>").attr("class","clearfix")
+                                            )
+                                    )
+                            )
+                    )
+                }
+            },
+            error:function (err) {
+                console.error(err);
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.contact-box').each(function () {
+                animationHover(this, 'pulse');
+            });
+        });
+    </script>
+</body>
+
+</html>
