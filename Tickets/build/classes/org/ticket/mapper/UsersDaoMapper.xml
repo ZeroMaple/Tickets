@@ -8,4 +8,18 @@
 			SELECT * FROM tickets.users WHERE userAccount=#{userAccount,jdbcType=VARCHAR} AND userPassWord=#{userPassWord,jdbcType=VARCHAR}
 		]]>
 	</select>
+	<insert id="addUsers" parameterType="users" >
+		<![CDATA[
+			INSERT INTO tickets.users(userName,userAccount,userPassWord,userAddress,userPhone) VALUES(#{userName,jdbcType=VARCHAR},#{userAccount,jdbcType=VARCHAR},#{userPassWord,jdbcType=VARCHAR},#{userAddress,jdbcType=VARCHAR},#{userPhone,jdbcType=VARCHAR})
+		]]>
+	</insert>
+	<select id="viewUsers" resultType="users" >
+		<![CDATA[
+			SELECT userId,userName,userAccount,userAddress,userPhone,userDate FROM tickets.users		
+			]]>
+	</select>
+	<select id="serachUsers" parameterType="users" resultType="users" >
+		<![CDATA[
+			SELECT userId,userName,userAccount,userAddress,userPhone,userDate FROM tickets.users WHERE userId=#{userId,jdbcType=Integer}			]]>
+	</select>
 </mapper>

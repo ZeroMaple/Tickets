@@ -1,4 +1,7 @@
 package org.ticket.controller;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.ticket.bean.Users;
@@ -46,6 +49,47 @@ public class UsersController {
 			return new JSONPObject(callback, flag);	
 		}
 		System.out.println("登录失败！flag="+flag);
+		return new JSONPObject(callback, flag);
+	}
+	//注册用户
+	@RequestMapping("Web/Application/registered")
+	@ResponseBody
+	public JSONPObject registered(Users user,@RequestParam String callback){
+		boolean flag = false;
+		try {
+			usersService.addUsers(user);	
+			flag = true;
+			return new JSONPObject(callback,flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("注册用户失败~");
+		}
+		return new JSONPObject(callback, flag);
+	}
+	//用户列表显示
+	@RequestMapping("Web/Application/viewUsers")
+	@ResponseBody
+	public JSONPObject viewUsers(@RequestParam String callback){
+		List<Users> users=new ArrayList<Users>();
+		boolean flag = false;
+		users=usersService.viewUsers();
+		if(null!= users){
+			flag = true;
+			return new JSONPObject(callback,users);
+		}
+		System.out.println(flag);
+		return new JSONPObject(callback, flag);
+	}
+	//根据ID查找分站详情
+	@RequestMapping("Web/Application/serachUsers")
+	@ResponseBody
+	public JSONPObject serachUsers(Users user,@RequestParam String callback){
+		Users users = usersService.serachUsers(user);
+		boolean flag = false;
+		if(null!= users){
+			flag = true;
+			return new JSONPObject(callback,users);
+		}
 		return new JSONPObject(callback, flag);
 	}
 }
