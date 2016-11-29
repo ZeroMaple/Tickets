@@ -14,14 +14,14 @@
 
 <!-- particles.js container -->
 <div id="particles-js"></div>
-<form action="http://Zero:8080/Tickets/Web/Application/verifyLogin.action">
+<form action="http://Zero:8080/Tickets/Web/Application/verifyLogin.action" method="post">
   <div class="login-main box-shadow">
     <div>后台登录系统</div>
       <div>
-        <input type="text" id="userAccount" placeholder="请输入账号" />
+        <input type="text" name="userAccount" id="userAccount" placeholder="请输入账号" />
       </div>
       <div>
-        <input type="password" id="userPassWord" placeholder="请输入密码" />
+        <input type="password" name="userPassWord" id="userPassWord" placeholder="请输入密码" />
       </div>
       <div class="errorText">
         <p>账号密码错误！</p>
