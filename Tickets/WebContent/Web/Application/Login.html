@@ -14,21 +14,23 @@
 
 <!-- particles.js container -->
 <div id="particles-js"></div>
-<div class="login-main box-shadow">
-  <div>后台登录系统</div>
-  <div>
-    <input type="text" id="userAccount" placeholder="请输入账号" />
+<form action="http://Zero:8080/Tickets/Web/Application/verifyLogin.action">
+  <div class="login-main box-shadow">
+    <div>后台登录系统</div>
+      <div>
+        <input type="text" id="userAccount" placeholder="请输入账号" />
+      </div>
+      <div>
+        <input type="password" id="userPassWord" placeholder="请输入密码" />
+      </div>
+      <div class="errorText">
+        <p>账号密码错误！</p>
+      </div>
+      <div>
+        <button type="submit" id="login">登录</button>
+      </div>
   </div>
-  <div>
-    <input type="password" id="userPassWord" placeholder="请输入密码" />
-  </div>
-  <div class="errorText">
-    <p>账号密码错误！</p>
-  </div>
-  <div>
-    <button id="login">登录</button>
-  </div>
-</div>
+</form>
 
 <!-- scripts -->
 <script src="../Resources/js/particles.min.js"></script>
@@ -40,29 +42,29 @@
   $(".login-main").show();
 
 //  AJAX
-  $("#login").click(function () {
-    var userAccount = $("#userAccount").val();
-    var userPassWord = $("#userPassWord").val();
-    $.ajax({
-      url:"http://Zero:8080/Tickets/Web/Application/registered.action",
-      method:"POST",
-      dataType:"jsonp",
-      data:{
-        userAccount:userAccount,
-        userPassWord:userPassWord
-      },
-      success:function (data) {
-        console.log(data);
-        var ReturnVal = data;
-        if(ReturnVal == false){
-          $(".errorText").show();
-        }
-      },
-      error:function (err) {
-        console.error(err);
-      }
-    });
-  });
+//  $("#login").click(function () {
+//    var userAccount = $("#userAccount").val();
+//    var userPassWord = $("#userPassWord").val();
+//    $.ajax({
+//      url:"http://Zero:8080/Tickets/Web/Application/verifyLogin.action",
+//      method:"POST",
+//      dataType:"jsonp",
+//      data:{
+//        userAccount:userAccount,
+//        userPassWord:userPassWord
+//      },
+//      success:function (data) {
+//        console.log(data);
+//        var ReturnVal = data;
+//        if(ReturnVal == false){
+//          $(".errorText").show();
+//        }
+//      },
+//      error:function (err) {
+//        console.error(err);
+//      }
+//    });
+//  });
 </script>
 </body>
 </html>
