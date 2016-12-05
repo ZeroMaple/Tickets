@@ -78,4 +78,18 @@
 
     }
 </script>
+<script>
+    $.ajax({
+        url:"http://Zero:8080/Tickets/Web/Application/verifyIdentidy.action",
+        method:"POST",
+        dataType:"jsonp",
+        data:{},
+        success:function (data) {
+            console.log(data);
+        },
+        error:function (err) {
+            console.error(err);
+        }
+    });
+</script>
 </html>
