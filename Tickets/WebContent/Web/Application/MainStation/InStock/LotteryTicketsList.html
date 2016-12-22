@@ -41,7 +41,7 @@
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="LotteryTicketTable">
                         <tr class="gradeX">
                             <td>001</td>
                             <td>福利彩票</td>
@@ -142,14 +142,46 @@
 
 <!-- Page-Level Scripts -->
 <script>
+//    table-Set
     $(document).ready(function () {
         $('.dataTables-example').dataTable();
     });
+
+//    ajax
+//    $.ajax({
+//        url:"",
+//        method:"POST",
+//        dataType:"jsonp",
+//        data:{},
+//        success:function (data) {
+//            console.log(data);
+//        },
+//        error:function (err) {
+//            console.error(err);
+//        }
+//    });
+    $(".LotteryTicketTable").append(
+            $("<tr></tr>").attr("class","gradeX").append(
+                $("<td></td>").html("006")
+            ).append(
+                    $("<td></td>").html("体育彩票")
+            ).append(
+                    $("<td></td>").html("入库")
+            ).append(
+                    $("<td></td>").html("2016.12.13 11:54:12")
+            ).append(
+                    $("<td></td>").html("244")
+            ).append(
+                    $("<td></td>").html("Admin")
+            ).append(
+                    $("<td></td>").html("一些小事,补录")
+            ).append(
+                    $("<td></td>").append(
+                            $("<input>").attr("type","button").attr("class","btn btn-primary").attr("value","编辑")
+                    )
+            )
+    );
 </script>
-
-
-
-
 </body>
 
 </html>
