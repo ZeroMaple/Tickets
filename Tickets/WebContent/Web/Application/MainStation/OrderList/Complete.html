@@ -20,7 +20,11 @@
     <link href="../../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
 
 </head>
-
+<style>
+    .orderInformation {
+        display: none;
+    }
+</style>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -87,6 +91,29 @@
             </div>
         </div>
     </div>
+
+    <!--layer层-->
+    <div class="DivForLayer">
+        <div class="orderInformation">
+            <table class="table table-striped table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <th>所需彩票编号</th>
+                    <th>彩票名</th>
+                    <th>所需数量</th>
+                </tr>
+                </thead>
+                <tbody class="">
+                <tr class="gradeX">
+                    <td>001</td>
+                    <td>福利彩票</td>
+                    <td>112</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 </div>
 
 <!-- 全局js -->
@@ -96,6 +123,7 @@
 
 
 <script src="../../../Resources/js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="../../../Resources/js/layer/layer.js"></script>
 
 <!-- Data Tables -->
 <script src="../../../Resources/js/plugins/dataTables/jquery.dataTables.js"></script>
@@ -138,10 +166,36 @@
                     $("<td></td>").html("杭州分站")
             ).append(
                     $("<td></td>").append(
-                            $("<input>").attr("type","button").attr("class","btn btn-default").attr("value","订单详情")
+                            $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("value","订单详情")
                     )
             )
     );
+
+    //    layer
+    $(".w-closeLayer").click(function () {
+        layer.closeAll();
+    });
+    $(".w-layerButton").click(function () {
+        var layerId = $(this).attr("name");
+        var layerTitle = $(this).val();
+        layerOpen(layerId,layerTitle);
+        $("." + layerId).show();
+    });
+    function layerOpen(iid,title) {
+        layer.open({
+            type: 1,
+            title: [title, 'font-size:18px;'],
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            area:["40%"],
+            anim: 2,
+            shadeClose: false, //开启遮罩关闭
+            shade: 0,
+            move: false,
+            scrollbar: false,
+            content: $("." + iid)
+        });
+    }
 </script>
 </body>
 
