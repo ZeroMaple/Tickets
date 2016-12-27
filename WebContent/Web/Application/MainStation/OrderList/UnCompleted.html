@@ -110,35 +110,37 @@
     });
 
     //    ajax
-    //    $.ajax({
-    //        url:"",
-    //        method:"POST",
-    //        dataType:"jsonp",
-    //        data:{},
-    //        success:function (data) {
-    //            console.log(data);
-    //        },
-    //        error:function (err) {
-    //            console.error(err);
-    //        }
-    //    });
-    $(".UnCompletedTable").append(
-            $("<tr></tr>").attr("class","gradeX").append(
-                    $("<td></td>").html("006")
-            ).append(
-                    $("<td></td>").html("2016.12.13 11:54:12")
-            ).append(
-                    $("<td></td>").html("2016.12.13 11:54:12")
-            ).append(
-                    $("<td></td>").html("体育彩票等1种彩票")
-            ).append(
-                    $("<td></td>").html("244")
-            ).append(
-                    $("<td></td>").html("杭州分站")
-            ).append(
-                    $("<td></td>").html("专车负责配送")
-            )
-    );
+        $.ajax({
+            url:"http://Zero:8080/Tickets/Web/Application/serachOrders.action",
+            method:"POST",
+            dataType:"jsonp",
+            data:{
+                ordersStatus:"待完成"
+            },
+            success:function (data) {
+                console.log(data);
+                $(".UnCompletedTable").append(
+                        $("<tr></tr>").attr("class","gradeX").append(
+                                $("<td></td>").html("006")
+                        ).append(
+                                $("<td></td>").html("2016.12.13 11:54:12")
+                        ).append(
+                                $("<td></td>").html("2016.12.13 11:54:12")
+                        ).append(
+                                $("<td></td>").html("体育彩票等1种彩票")
+                        ).append(
+                                $("<td></td>").html("244")
+                        ).append(
+                                $("<td></td>").html("杭州分站")
+                        ).append(
+                                $("<td></td>").html("专车负责配送")
+                        )
+                );
+            },
+            error:function (err) {
+                console.error(err);
+            }
+        });
 </script>
 </body>
 
