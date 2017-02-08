@@ -7923,6 +7923,43 @@ body.skin-3 {
     color: #f4f3f9;
     background-color: #7266ba;
 }
+
+/*add by wangHL */
+.bg-success_ {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.bg-success_ .text-muted,.bg-success_ .text-fff {
+    color: #3c763d;
+}
+.bg-info_ {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+.bg-info_ .text-muted,.bg-info_ .text-fff {
+    color: #31708f;
+}
+.bg-warning_ {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.bg-warning_ .text-muted,.bg-warning_ .text-fff {
+    color: #8a6d3b;
+}
+.bg-danger_ {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.bg-danger_ .text-muted,.bg-danger_ .text-fff {
+    color: #a94442;
+}
+
+/*add End*/
+
 .hidden-folded{
     color: #5c798f !important;
     font-size: 12px;

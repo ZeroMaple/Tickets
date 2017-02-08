@@ -42,29 +42,29 @@
   $(".login-main").show();
 
 //  AJAX
-//  $("#login").click(function () {
-//    var userAccount = $("#userAccount").val();
-//    var userPassWord = $("#userPassWord").val();
-//    $.ajax({
-//      url:"http://Zero:8080/Tickets/Web/Application/verifyLogin.action",
-//      method:"POST",
-//      dataType:"jsonp",
-//      data:{
-//        userAccount:userAccount,
-//        userPassWord:userPassWord
-//      },
-//      success:function (data) {
-//        console.log(data);
-//        var ReturnVal = data;
-//        if(ReturnVal == false){
-//          $(".errorText").show();
-//        }
-//      },
-//      error:function (err) {
-//        console.error(err);
-//      }
-//    });
-//  });
+  $("#login").click(function () {
+    var userAccount = $("#userAccount").val();
+    var userPassWord = $("#userPassWord").val();
+    $.ajax({
+      url:"http://Zero:8080/Tickets/Web/Application/verifyLogin.action",
+      method:"POST",
+      dataType:"jsonp",
+      data:{
+        userAccount:userAccount,
+        userPassWord:userPassWord
+      },
+      success:function (data) {
+        console.log(data);
+        var ReturnVal = data;
+        if(ReturnVal == false){
+          $(".errorText").show();
+        }
+      },
+      error:function (err) {
+        console.error(err);
+      }
+    });
+  });
 </script>
 </body>
 </html>

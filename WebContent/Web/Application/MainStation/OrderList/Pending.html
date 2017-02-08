@@ -66,9 +66,9 @@
                             <td>112</td>
                             <td>天津分站</td>
                             <td>
-                                <input type="button" name="orderInformation" class="btn btn-default w-layerButton" value="订单详情">
-                                <input type="button" name="orderPass" class="btn btn-primary" value="通过审核">
-                                <input type="button" name="orderReject" class="btn btn-danger w-layerButton" value="驳回请求">
+                                <input type="button" name="orderInformation" class="btn btn-default" onclick="layerOP(this)" value="订单详情">
+                                <input type="button" name="orderPass" class="btn btn-primary" onclick="layerOrder()" value="通过审核">
+                                <input type="button" name="orderReject" class="btn btn-danger" onclick="layerOP(this)" value="驳回请求">
                             </td>
                         </tr>
                         <tr class="gradeX">
@@ -78,9 +78,9 @@
                             <td>112</td>
                             <td>天津分站</td>
                             <td>
-                                <input type="button" class="btn btn-default " value="订单详情">
-                                <input type="button" class="btn btn-primary " value="通过审核">
-                                <input type="button" class="btn btn-danger " value="驳回请求">
+                                <input type="button" name="orderInformation" class="btn btn-default" onclick="layerOP(this)" value="订单详情">
+                                <input type="button" name="orderPass" class="btn btn-primary" onclick="layerOrder()" value="通过审核">
+                                <input type="button" name="orderReject" class="btn btn-danger" onclick="layerOP(this)" value="驳回请求">
                             </td>
                         </tr>
                         <tr class="gradeX">
@@ -90,38 +90,13 @@
                             <td>112</td>
                             <td>天津分站</td>
                             <td>
-                                <input type="button" class="btn btn-default " value="订单详情">
-                                <input type="button" class="btn btn-primary " value="通过审核">
-                                <input type="button" class="btn btn-danger " value="驳回请求">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>福利彩票等3种彩票</td>
-                            <td>112</td>
-                            <td>天津分站</td>
-                            <td>
-                                <input type="button" class="btn btn-default " value="订单详情">
-                                <input type="button" class="btn btn-primary " value="通过审核">
-                                <input type="button" class="btn btn-danger " value="驳回请求">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>福利彩票等3种彩票</td>
-                            <td>112</td>
-                            <td>天津分站</td>
-                            <td>
-                                <input type="button" class="btn btn-default " value="订单详情">
-                                <input type="button" class="btn btn-primary " value="通过审核">
-                                <input type="button" class="btn btn-danger " value="驳回请求">
+                                <input type="button" name="orderInformation" class="btn btn-default" onclick="layerOP(this)" value="订单详情">
+                                <input type="button" name="orderPass" class="btn btn-primary" onclick="layerOrder()" value="通过审核">
+                                <input type="button" name="orderReject" class="btn btn-danger" onclick="layerOP(this)" value="驳回请求">
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
@@ -197,27 +172,30 @@
         },
         success:function (data) {
             console.log(data);
-            $(".PendingTable").append(
-                    $("<tr></tr>").attr("class","gradeX").append(
-                            $("<td></td>").html("006")
-                    ).append(
-                            $("<td></td>").html("2016.12.13 11:54:12")
-                    ).append(
-                            $("<td></td>").html("体育彩票等1种彩票")
-                    ).append(
-                            $("<td></td>").html("244")
-                    ).append(
-                            $("<td></td>").html("杭州分站")
-                    ).append(
-                            $("<td></td>").append(
-                                    $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("value","订单详情")
-                            ).append(
-                                    $("<input>").attr("type","button").attr("name","orderPass").attr("class","btn btn-primary").attr("style","margin-left:5px;").attr("value","通过请求")
-                            ).append(
-                                    $("<input>").attr("type","button").attr("name","orderReject").attr("class","btn btn-danger w-layerButton").attr("style","margin-left:5px;").attr("value","驳回请求")
-                            )
-                    )
-            );
+            for(var i = 0;i < data.length;i++){
+                var time = new Date(data[i].ordersDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
+                $(".PendingTable").append(
+                        $("<tr></tr>").attr("class","gradeX").append(
+                                $("<td></td>").html(data[i].ordersNum)
+                        ).append(
+                                $("<td></td>").html(time)
+                        ).append(
+                                $("<td></td>").html(data[i].ticketName.ticketName)
+                        ).append(
+                                $("<td></td>").html(data[i].ordersNum)
+                        ).append(
+                                $("<td></td>").html("杭州分站")
+                        ).append(
+                                $("<td></td>").append(
+                                        $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("onclick","layerOP(this)").attr("value","订单详情")
+                                ).append(
+                                        $("<input>").attr("type","button").attr("name","orderPass").attr("class","btn btn-primary").attr("style","margin-left:5px;").attr("onclick","layerOrder()").attr("value","通过请求")
+                                ).append(
+                                        $("<input>").attr("type","button").attr("name","orderReject").attr("class","btn btn-danger w-layerButton").attr("style","margin-left:5px;").attr("onclick","layerOP(this)").attr("value","驳回请求")
+                                )
+                        )
+                );
+            }
         },
         error:function (err) {
             console.error(err);
@@ -228,12 +206,18 @@
     $(".w-closeLayer").click(function () {
         layer.closeAll();
     });
-    $(".w-layerButton").click(function () {
-        var layerId = $(this).attr("name");
-        var layerTitle = $(this).val();
+//    $(".w-layerButton").click(function () {
+//        var layerId = $(this).attr("name");
+//        var layerTitle = $(this).val();
+//        layerOpen(layerId,layerTitle);
+//        $("." + layerId).show();
+//    });
+    function layerOP(e) {
+        var layerId = $(e).attr("name");
+        var layerTitle = $(e).val();
         layerOpen(layerId,layerTitle);
         $("." + layerId).show();
-    });
+    }
     function layerOpen(iid,title) {
         layer.open({
             type: 1,
@@ -249,7 +233,20 @@
             content: $("." + iid)
         });
     }
-    $('[name=orderPass]').click(function () {
+//    $('[name=orderPass]').click(function () {
+//        swal({
+//            title: "您确定要通过该订单吗？",
+//            text: "确认前请务必仔细查看订单详细信息，通过之后将无法撤回！",
+//            type: "warning",
+//            showCancelButton: true,
+//            confirmButtonColor: "#23b7e5",
+//            confirmButtonText: "通过",
+//            closeOnConfirm: false
+//        }, function () {
+//            swal("审核成功！", "您已经通过该订单。", "success");
+//        });
+//    });
+    function layerOrder() {
         swal({
             title: "您确定要通过该订单吗？",
             text: "确认前请务必仔细查看订单详细信息，通过之后将无法撤回！",
@@ -261,7 +258,7 @@
         }, function () {
             swal("审核成功！", "您已经通过该订单。", "success");
         });
-    });
+    }
 </script>
 </body>
 

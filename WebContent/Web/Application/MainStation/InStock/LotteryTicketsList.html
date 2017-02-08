@@ -13,6 +13,8 @@
 
     <link href="../../../Resources/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="../../../Resources/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../../Resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="../../../Resources/font_ico/iconfont.css" rel="stylesheet">
 
     <link href="../../../Resources/css/animate.css" rel="stylesheet">
     <link href="../../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
@@ -25,23 +27,61 @@
         color: #333;
         font-weight: bold;
     }
+    .up {
+        cursor: pointer;
+        background-color: #ffc !important;
+    }
+    .down {
+        cursor: pointer;
+        background-color: #CCC !important;
+    }
+    .tipsFunction {
+        position: absolute !important;
+        z-index: 99999;
+        padding-left: 20px;
+        margin-top: 5px;
+        display: none;
+    }
+    textarea {
+        resize: none;
+        width: 100%;
+    }
+    .editLayer {
+        display: none;
+    }
+    .w-side {
+        margin: 20px 5%;
+    }
+    .editLayer .col-sm-10,.editLayer label {
+        margin: 10px 0;
+    }
 </style>
 <body class="gray-bg">
+<button type="button" id="addTicket" class="btn btn-primary dropdown-toggle w-side">添加彩票</button>
 <div class="row">
     <div class="col-sm-12">
         <div class="wrapper wrapper-content animated fadeInUp">
             <ul class="notes">
                 <li>
-                    <div>
+                    <p class="tipsFunction">
+                        <span onclick="edit()"><i class="icon iconfont icon-edit"></i></span>
+                        <span onclick="layerOrder('删除',this)"><i class="icon iconfont icon-del1"></i></span>
+                    </p>
+                    <div class="up" onclick="changeStatus(this)">
                         <h2>体育彩票</h2>
                         <p>狭义的体育彩票指的是以体育比赛为媒体发行的彩票，亦可称为竞猜型体育彩票。如足球彩票、棒球彩票、赛马彩票等；广义的体育彩票指的是发行彩票的目的与体育相关的各类彩票。</p>
                     </div>
                 </li>
                 <li>
-                    <div>
+                    <p class="tipsFunction">
+                        <span>编辑</span>
+                        <span>删除</span>
+                    </p>
+                    <div class="down" onclick="changeStatus(this)">
                         <h2>移动设备优先</h2>
                         <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在 Bootstrap 3 中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增……</p>
                     </div>
+
                 </li>
                 <li>
                     <div>
@@ -71,10 +111,29 @@
         </div>
     </div>
 </div>
+<!--layer层-->
+<div class="DivForLayer">
+    <div class="editLayer">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">彩票名称</label>
+            <div class="col-sm-10">
+                <input class="TicketsName" type="text" />
+            </div>
+            <label class="col-sm-2 control-label">描述</label>
+            <div class="col-sm-10">
+                <textarea name="" class="TicketsDis" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 全局js -->
 <script src="../../../Resources/js/jquery.min.js?v=2.1.4"></script>
 <script src="../../../Resources/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<script src="../../../Resources/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="../../../Resources/js/layer/layer.js"></script>
 
 
 
@@ -82,18 +141,102 @@
 <script src="../../../Resources/js/content.js?v=1.0.0"></script>
 
 <script>
-    $(".notes").append(
-            $("<li></li>").append(
-                    $("<div></div>").append(
-                            $("<h2></h2>").html("体育彩票")
-                    ).append(
-                            $("<p></p>").html("狭义的体育彩票指的是以体育比赛为媒体发行的彩票，亦可称为竞猜型体育彩票。如足球彩票、棒球彩票、赛马彩票等；广义的体育彩票指的是发行彩票的目的与体育相关的各类彩票。")
-                    )
-            )
-    )
+    $("#addTicket").click(function () {
+        layer.open({
+            type: 1,
+            title: ['编辑', 'font-size:18px;'],
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            area:["40%"],
+            anim: 2,
+            shadeClose: false, //开启遮罩关闭
+            shade: 0,
+            move: false,
+            scrollbar: false,
+            btn: ['提交'], //可以无限个按钮
+            yes: function(index, layero){
+                $(".notes").append(
+                        $("<li></li>").append(
+                                $("<p></p>").attr("class","tipsFunction").css("display","block").append(
+                                        $("<span></span>").attr("onclick","edit()").append(
+                                                $("<i></i>").attr("class","icon iconfont icon-edit")
+                                        )
+                                ).append(
+                                        $("<span></span>").attr("onclick","layerOrder('删除',this)").append(
+                                                $("<i></i>").attr("class","icon iconfont icon-del1")
+                                        )
+                                )
+                        ).append(
+                                $("<div></div>").attr("class","down").attr("onclick","changeStatus(this)").append(
+                                        $("<h2></h2>").html($(".TicketsName").val())
+                                ).append(
+                                        $("<p></p>").html($(".TicketsDis").val())
+                                )
+                        )
+                );
+                $(".TicketsName").val('');
+                $(".TicketsDis").val('');
+                layer.closeAll();
+            },
+            content: $(".editLayer")
+        });
+    });
 </script>
+<script>
+    function changeStatus(e) {
+        if($(e).hasClass("up")){
+            layerOrder("下架",e);
+        }else if($(e).hasClass("down")) {
+            layerOrder("上架",e);
+        }
+    }
+    function layerOrder(status,e,id) {
+        swal({
+            title: "您确定要" + status + "该彩票吗？",
+            text: "确认前请务必仔细确认！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#23b7e5",
+            confirmButtonText: status,
+            closeOnConfirm: false
+        }, function () {
+            swal(status +"成功！", "您已经" + status + "该彩票。", "success");
+            if(status == "上架"){
+                $(e).removeClass("down").addClass("up");
+                $(e).prev().fadeOut();
+            }else if(status == "下架") {
+                $(e).removeClass("up").addClass("down");
+                $(e).prev().fadeIn();
+            }else if(status == "删除"){
+                $(e).parent().parent().remove();
+            }
+        });
+    }
+    $('.w-closeLayer').click(function () {
+        layer.closeAll();
+        $(".editLayer").hide();
+    });
+    function edit() {
+        $(".editLayer").show();
+        layer.open({
+            type: 1,
+            title: ['编辑', 'font-size:18px;'],
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            area:["40%"],
+            anim: 2,
+            shadeClose: false, //开启遮罩关闭
+            shade: 0,
+            move: false,
+            scrollbar: false,
+            btn: ['提交'], //可以无限个按钮
+            btn1: function(index, layero){
 
-
+            },
+            content: $(".editLayer")
+        });
+    }
+</script>
 
 </body>
 
