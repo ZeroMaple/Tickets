@@ -23,106 +23,7 @@
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div></div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>彩票编号</th>
-                            <th>彩票名称</th>
-                            <th>操作类型</th>
-                            <th>操作时间</th>
-                            <th>数量</th>
-                            <th>操作员</th>
-                            <th>备注</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody class="LotteryTicketTable">
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>福利彩票</td>
-                            <td>出库</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>122</td>
-                            <td>Admin</td>
-                            <td></td>
-                            <td>
-                                <input type="button" class="btn btn-primary " value="编辑">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>福利彩票</td>
-                            <td>出库</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>122</td>
-                            <td>Admin</td>
-                            <td></td>
-                            <td>
-                                <input type="button" class="btn btn-primary " value="编辑">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>福利彩票</td>
-                            <td>出库</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>122</td>
-                            <td>Admin</td>
-                            <td></td>
-                            <td>
-                                <input type="button" class="btn btn-primary " value="编辑">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>福利彩票</td>
-                            <td>出库</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>122</td>
-                            <td>Admin</td>
-                            <td></td>
-                            <td>
-                                <input type="button" class="btn btn-primary " value="编辑">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>003</td>
-                            <td>福利彩票</td>
-                            <td>出库</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>122</td>
-                            <td>Admin</td>
-                            <td></td>
-                            <td>
-                                <input type="button" class="btn btn-primary " value="编辑">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>福利彩票</td>
-                            <td>出库</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>122</td>
-                            <td>Admin</td>
-                            <td></td>
-                            <td>
-                                <input type="button" class="btn btn-primary " value="编辑">
-                            </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="echarts" style="width: 1000px;height:400px;"></div>
 </div>
 
 <!-- 全局js -->
@@ -132,6 +33,7 @@
 
 
 <script src="../../../Resources/js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="../../../Resources/js/echarts.min.js"></script>
 
 <!-- Data Tables -->
 <script src="../../../Resources/js/plugins/dataTables/jquery.dataTables.js"></script>
@@ -143,45 +45,54 @@
 
 <!-- Page-Level Scripts -->
 <script>
-    //    table-Set
-    $(document).ready(function () {
-        $('.dataTables-example').dataTable();
-    });
+    var text = '{ "sites" : [' +
+            '[{ "name":"彩票1" , "type":"line" , "stack":"总量" , "data":"120, 132, 101, 134, 90, 230, 210"},' +
+            '{ "name":"彩票2" , "type":"line" , "stack":"总量" , "data":"220, 182, 191, 234, 290, 330, 310" },' +
+            '{ "name":"彩票3" , "type":"line" , "stack":"总量" , "data":"820, 932, 901, 934, 1290, 1330, 1320" } ]';
 
-    //    ajax
-    //    $.ajax({
-    //        url:"",
-    //        method:"POST",
-    //        dataType:"jsonp",
-    //        data:{},
-    //        success:function (data) {
-    //            console.log(data);
-    //        },
-    //        error:function (err) {
-    //            console.error(err);
-    //        }
-    //    });
-    $(".LotteryTicketTable").append(
-            $("<tr></tr>").attr("class","gradeX").append(
-                    $("<td></td>").html("006")
-            ).append(
-                    $("<td></td>").html("体育彩票")
-            ).append(
-                    $("<td></td>").html("入库")
-            ).append(
-                    $("<td></td>").html("2016.12.13 11:54:12")
-            ).append(
-                    $("<td></td>").html("244")
-            ).append(
-                    $("<td></td>").html("Admin")
-            ).append(
-                    $("<td></td>").html("一些小事,补录")
-            ).append(
-                    $("<td></td>").append(
-                            $("<input>").attr("type","button").attr("class","btn btn-primary").attr("value","编辑")
-                    )
-            )
-    );
+    obj = JSON.parse(text);
+    exam = Object.keys(text).map(function(k){return text[k]});
+    console.log(exam);
+    var dom = document.getElementById("echarts");
+    var myChart = echarts.init(dom);
+    option = {
+        title: {
+            text: '折线图堆叠'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一','周二','周三','周四','周五','周六','周日']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: col_data
+
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+<script>
+
 </script>
 </body>
 
