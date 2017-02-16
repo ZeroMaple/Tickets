@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title> - 标签墙</title>
+    <title>彩票列表</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -54,6 +54,9 @@
     }
     .editLayer .col-sm-10,.editLayer label {
         margin: 10px 0;
+    }
+    .DivForLayer .row {
+        margin: 10px 0 !important;
     }
 </style>
 <body class="gray-bg">
@@ -115,13 +118,17 @@
 <div class="DivForLayer">
     <div class="editLayer">
         <div class="form-group">
-            <label class="col-sm-2 control-label">彩票名称</label>
-            <div class="col-sm-10">
-                <input class="TicketsName" type="text" />
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-sm-4 control-label">彩票名称</div>
+                <div class="col-sm-8">
+                    <input class="TicketsName" type="text" />
+                </div>
             </div>
-            <label class="col-sm-2 control-label">描述</label>
-            <div class="col-sm-10">
-                <textarea name="" class="TicketsDis" cols="30" rows="10"></textarea>
+            <div>
+                <div class="col-sm-4 control-label">描述</div>
+                <div class="col-sm-8">
+                    <textarea name="" class="TicketsDis" cols="30" rows="10"></textarea>
+                </div>
             </div>
         </div>
     </div>

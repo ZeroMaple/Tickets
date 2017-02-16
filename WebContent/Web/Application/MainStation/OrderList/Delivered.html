@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title> - 数据表格</title>
+    <title>代发货</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="../../../Resources/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="../../../Resources/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../../Resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
     <!-- Data Tables -->
     <link href="../../../Resources/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
@@ -80,8 +81,8 @@
                             <td>112</td>
                             <td>天津分站</td>
                             <td>
-                                <input type="button" id="orderInformation" class="btn btn-default w-closeLayer" value="订单详情">
-                                <input type="button" id="orderCheck" class="btn btn-primary .w-closeLayer" value="确认发货">
+                                <input type="button" name="orderInformation" onclick="layerOP(this)" class="btn btn-default w-closeLayer" value="订单详情">
+                                <input type="button" name="orderCheck" onclick="CheckDeliver(this)" class="btn btn-primary .w-closeLayer" value="确认发货">
                             </td>
                         </tr>
                         <tr class="gradeX">
@@ -163,6 +164,7 @@
 
 <script src="../../../Resources/js/plugins/jeditable/jquery.jeditable.js"></script>
 <script src="../../../Resources/js/layer/layer.js"></script>
+<script src="../../../Resources/js/plugins/sweetalert/sweetalert.min.js"></script>
 
 <!-- Data Tables -->
 <script src="../../../Resources/js/plugins/dataTables/jquery.dataTables.js"></script>
@@ -205,9 +207,9 @@
                                     $("<td></td>").html("杭州分站")
                             ).append(
                                     $("<td></td>").append(
-                                            $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("value","订单详情")
+                                            $("<input>").attr("type","button").attr("name","orderInformation").attr("onclick","layerOpen(this)").attr("class","btn btn-default w-layerButton").attr("value","订单详情")
                                     ).append(
-                                            $("<input>").attr("type","button").attr("name","orderCheck").attr("class","btn btn-primary w-layerButton").attr("style","margin-left:5px;").attr("value","确认发货")
+                                            $("<input>").attr("type","button").attr("name","orderCheck").attr("onclick","CheckDeliver(this)").attr("class","btn btn-primary w-layerButton").attr("style","margin-left:5px;").attr("value","确认发货")
                                     )
                             )
                     );
@@ -220,14 +222,20 @@
 
     //    layer
     $(".w-closeLayer").click(function () {
-        layer.closeAll();
+//        layer.closeAll();
     });
-    $(".w-layerButton").click(function () {
-        var layerId = $(this).attr("name");
-        var layerTitle = $(this).val();
-        layerOpen(layerId,layerTitle);
+//    $(".w-layerButton").click(function () {
+//        var layerId = $(this).attr("name");
+//        var layerTitle = $(this).val();
+//        layerOpen(layerId,layerTitle);
+//        $("." + layerId).show();
+//    });
+    function layerOP(e) {
+        var layerId = $(e).attr("name");
+        var layerTitle = $(e).val();
         $("." + layerId).show();
-    });
+        layerOpen(layerId,layerTitle);
+    }
     function layerOpen(iid,title) {
         layer.open({
             type: 1,
@@ -241,6 +249,20 @@
             move: false,
             scrollbar: false,
             content: $("." + iid)
+        });
+    }
+    function CheckDeliver(e,id) {
+        swal({
+            title: "您确定要确认发货么？",
+            text: "确认前请务必仔细确认！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#23b7e5",
+            confirmButtonText: "确认发货",
+            closeOnConfirm: false
+        }, function () {
+            swal("确认发货成功！", "操作成功。", "success");
+            $(e).parent().parent().remove();
         });
     }
 </script>
