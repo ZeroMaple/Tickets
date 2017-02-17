@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>代发货</title>
+    <title>待发货</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="../../../Resources/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
@@ -192,19 +192,20 @@
             success:function (data) {
                 console.log(data);
                 for(var i = 0;i < data.length;i++){
+                    var time = new Date(data[i].ordersDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
                     $(".DeliveredTable").append(
                             $("<tr></tr>").attr("class","gradeX").append(
-                                    $("<td></td>").html("006")
+                                    $("<td></td>").html(data[i].ordersId)
+                            ).append(
+                                    $("<td></td>").html(time)
                             ).append(
                                     $("<td></td>").html("2016.12.13 11:54:12")
                             ).append(
-                                    $("<td></td>").html("2016.12.13 11:54:12")
+                                    $("<td></td>").html(data[i].ticket.ticketName)
                             ).append(
-                                    $("<td></td>").html("体育彩票等1种彩票")
+                                    $("<td></td>").html(data[i].ordersNum)
                             ).append(
-                                    $("<td></td>").html("244")
-                            ).append(
-                                    $("<td></td>").html("杭州分站")
+                                    $("<td></td>").html(data[i].user.userName)
                             ).append(
                                     $("<td></td>").append(
                                             $("<input>").attr("type","button").attr("name","orderInformation").attr("onclick","layerOpen(this)").attr("class","btn btn-default w-layerButton").attr("value","订单详情")

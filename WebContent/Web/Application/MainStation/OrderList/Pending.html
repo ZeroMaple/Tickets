@@ -71,30 +71,6 @@
                                 <input type="button" name="orderReject" class="btn btn-danger" onclick="layerOP(this)" value="驳回请求">
                             </td>
                         </tr>
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>福利彩票等3种彩票</td>
-                            <td>112</td>
-                            <td>天津分站</td>
-                            <td>
-                                <input type="button" name="orderInformation" class="btn btn-default" onclick="layerOP(this)" value="订单详情">
-                                <input type="button" name="orderPass" class="btn btn-primary" onclick="layerOrder()" value="通过审核">
-                                <input type="button" name="orderReject" class="btn btn-danger" onclick="layerOP(this)" value="驳回请求">
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>001</td>
-                            <td>2016.12.13 11:54:12</td>
-                            <td>福利彩票等3种彩票</td>
-                            <td>112</td>
-                            <td>天津分站</td>
-                            <td>
-                                <input type="button" name="orderInformation" class="btn btn-default" onclick="layerOP(this)" value="订单详情">
-                                <input type="button" name="orderPass" class="btn btn-primary" onclick="layerOrder()" value="通过审核">
-                                <input type="button" name="orderReject" class="btn btn-danger" onclick="layerOP(this)" value="驳回请求">
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -119,6 +95,16 @@
                     <td>福利彩票</td>
                     <td>112</td>
                 </tr>
+                <tr class="gradeX">
+                    <td>001</td>
+                    <td>福利彩票</td>
+                    <td>112</td>
+                </tr>
+                <tr class="gradeX">
+                    <td>001</td>
+                    <td>福利彩票</td>
+                    <td>112</td>
+                </tr>
                 </tbody>
             </table>
 
@@ -127,11 +113,11 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">驳回原因</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"> <span class="help-block m-b-none">请简单填写驳回原因  如：“福利彩票库存不足！”</span>
+                    <input type="text" class="form-control ReasonText"> <span class="help-block m-b-none">请简单填写驳回原因  如：“福利彩票库存不足！”</span>
                 </div>
             </div>
             <div class="divForLayerButton">
-                <input type="button" class="btn btn-default w-layerButton w-closeLayer" value="提交">
+                <input type="button" id="ordersReason" class="btn btn-default w-layerButton w-closeLayer" value="提交">
             </div>
         </div>
     </div>
@@ -175,23 +161,23 @@
             for(var i = 0;i < data.length;i++){
                 var time = new Date(data[i].ordersDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
                 $(".PendingTable").append(
-                        $("<tr></tr>").attr("class","gradeX").append(
-                                $("<td></td>").html(data[i].ordersNum)
+                        $("<tr></tr>").attr("class","gradeX").attr("id",data[i].ordersId).append(
+                                $("<td></td>").html(data[i].ordersId)
                         ).append(
                                 $("<td></td>").html(time)
                         ).append(
-                                $("<td></td>").html(data[i].ticketName.ticketName)
+                                $("<td></td>").html(data[i].ticket.ticketName)
                         ).append(
                                 $("<td></td>").html(data[i].ordersNum)
                         ).append(
-                                $("<td></td>").html("杭州分站")
+                                $("<td></td>").html(data[i].user.userName)
                         ).append(
                                 $("<td></td>").append(
-                                        $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("onclick","layerOP(this)").attr("value","订单详情")
+                                        $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("onclick","layerOP(this," + data[i].ordersId +")").attr("value","订单详情")
                                 ).append(
-                                        $("<input>").attr("type","button").attr("name","orderPass").attr("class","btn btn-primary").attr("style","margin-left:5px;").attr("onclick","layerOrder()").attr("value","通过请求")
+                                        $("<input>").attr("type","button").attr("name","orderPass").attr("class","btn btn-primary").attr("style","margin-left:5px;").attr("onclick","layerOrder(this," + data[i].ordersId + ")").attr("value","通过请求")
                                 ).append(
-                                        $("<input>").attr("type","button").attr("name","orderReject").attr("class","btn btn-danger w-layerButton").attr("style","margin-left:5px;").attr("onclick","layerOP(this)").attr("value","驳回请求")
+                                        $("<input>").attr("type","button").attr("name","orderReject").attr("class","btn btn-danger w-layerButton").attr("style","margin-left:5px;").attr("onclick","layerOP(this," + data[i].ordersId +")").attr("value","驳回请求")
                                 )
                         )
                 );
@@ -212,13 +198,32 @@
 //        layerOpen(layerId,layerTitle);
 //        $("." + layerId).show();
 //    });
-    function layerOP(e) {
+    function layerOP(e,oid) {
+        OID = oid;
+        $(".ReasonText").val('');
         var layerId = $(e).attr("name");
         var layerTitle = $(e).val();
         layerOpen(layerId,layerTitle);
         $("." + layerId).show();
     }
     function layerOpen(iid,title) {
+        if(iid == "orderInformation"){
+            $.ajax({
+                url:"http://Zero:8080/Tickets/Web/Application/ordersInfo.action",
+                method:"POST",
+                dataType:"jsonp",
+                data:{
+                    ordersId:OID
+                },
+                success:function (data) {
+                    console.log(data);
+                    alert(1);
+                },
+                error:function (err) {
+                    console.error(err);
+                }
+            });
+        }
         layer.open({
             type: 1,
             title: [title, 'font-size:18px;'],
@@ -233,20 +238,7 @@
             content: $("." + iid)
         });
     }
-//    $('[name=orderPass]').click(function () {
-//        swal({
-//            title: "您确定要通过该订单吗？",
-//            text: "确认前请务必仔细查看订单详细信息，通过之后将无法撤回！",
-//            type: "warning",
-//            showCancelButton: true,
-//            confirmButtonColor: "#23b7e5",
-//            confirmButtonText: "通过",
-//            closeOnConfirm: false
-//        }, function () {
-//            swal("审核成功！", "您已经通过该订单。", "success");
-//        });
-//    });
-    function layerOrder() {
+    function layerOrder(e,oId) {
         swal({
             title: "您确定要通过该订单吗？",
             text: "确认前请务必仔细查看订单详细信息，通过之后将无法撤回！",
@@ -257,8 +249,43 @@
             closeOnConfirm: false
         }, function () {
             swal("审核成功！", "您已经通过该订单。", "success");
+            $.ajax({
+                url:"http://Zero:8080/Tickets/Web/Application/confirmOrders.action",
+                method:"POST",
+                dataType:"jsonp",
+                data:{
+                    ordersId:oId
+                },
+                success:function (data) {
+                    console.log(data);
+                    $(e).parent().parent().remove();
+                },
+                error:function (err) {
+                    console.error(err);
+                }
+            });
         });
     }
+
+    var OID;
+    $("#ordersReason").click(function () {
+        $.ajax({
+            url:"http://Zero:8080/Tickets/Web/Application/rejectRequest.action",
+            method:"POST",
+            dataType:"jsonp",
+            data:{
+                ordersId:OID,
+                ordersReason:$(".ReasonText").val()
+            },
+            success:function (data) {
+                console.log(data);
+                $("#"+ OID).remove();
+            },
+            error:function (err) {
+                console.error(err);
+            }
+        });
+    });
 </script>
 </body>
 

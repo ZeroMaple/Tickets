@@ -119,23 +119,26 @@
             },
             success:function (data) {
                 console.log(data);
-                $(".UnCompletedTable").append(
-                        $("<tr></tr>").attr("class","gradeX").append(
-                                $("<td></td>").html("006")
-                        ).append(
-                                $("<td></td>").html("2016.12.13 11:54:12")
-                        ).append(
-                                $("<td></td>").html("2016.12.13 11:54:12")
-                        ).append(
-                                $("<td></td>").html("体育彩票等1种彩票")
-                        ).append(
-                                $("<td></td>").html("244")
-                        ).append(
-                                $("<td></td>").html("杭州分站")
-                        ).append(
-                                $("<td></td>").html("专车负责配送")
-                        )
-                );
+                for(var i = 0;i < data.length;i++){
+                    var time = new Date(data[i].ordersDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
+                    $(".UnCompletedTable").append(
+                            $("<tr></tr>").attr("class","gradeX").append(
+                                    $("<td></td>").html(data[i].ordersId)
+                            ).append(
+                                    $("<td></td>").html(time)
+                            ).append(
+                                    $("<td></td>").html("2016.12.13 11:54:12")
+                            ).append(
+                                    $("<td></td>").html(data[i].ticket.ticketName)
+                            ).append(
+                                    $("<td></td>").html(data[i].ordersNum)
+                            ).append(
+                                    $("<td></td>").html(data[i].user.userName)
+                            ).append(
+                                    $("<td></td>").html("专车负责配送")
+                            )
+                    );
+                }
             },
             error:function (err) {
                 console.error(err);
