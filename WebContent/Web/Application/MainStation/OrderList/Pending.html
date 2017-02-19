@@ -39,6 +39,9 @@
         display: block;
         clear: both;
     }
+    .DivForLayer .layui-layer-content {
+        height:auto !important;
+    }
 </style>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -89,22 +92,22 @@
                     <th>所需数量</th>
                 </tr>
                 </thead>
-                <tbody class="">
-                <tr class="gradeX">
-                    <td>001</td>
-                    <td>福利彩票</td>
-                    <td>112</td>
-                </tr>
-                <tr class="gradeX">
-                    <td>001</td>
-                    <td>福利彩票</td>
-                    <td>112</td>
-                </tr>
-                <tr class="gradeX">
-                    <td>001</td>
-                    <td>福利彩票</td>
-                    <td>112</td>
-                </tr>
+                <tbody class="layerTable">
+                    <tr class="gradeX">
+                        <td>001</td>
+                        <td>福利彩票</td>
+                        <td>112</td>
+                    </tr>
+                    <tr class="gradeX">
+                        <td>001</td>
+                        <td>福利彩票</td>
+                        <td>112</td>
+                    </tr>
+                    <tr class="gradeX">
+                        <td>001</td>
+                        <td>福利彩票</td>
+                        <td>112</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -210,6 +213,7 @@
 //    订单详情AJAX请求
     function layerOpen(iid,title) {
         if(iid == "orderInformation"){
+            $(".layerTable").empty();
             $.ajax({
                 url:"http://Zero:8080/Tickets/Web/Application/ordersInfo.action",
                 method:"POST",
@@ -219,7 +223,20 @@
                 },
                 success:function (data) {
                     console.log(data);
-
+                    var dataId = data.ticketId.split(",");
+                    var dataName = data.ticket.ticketName.split(",");
+                    var dataNum = data.ordersNum.split(",");
+                    for(var i = 0;i < dataId.length;i++){
+                        $(".layerTable").append(
+                                $("<tr></tr>").attr("class","gradeX").append(
+                                        $("<td></td>").html(dataId[i])
+                                ).append(
+                                        $("<td></td>").html(dataName[i])
+                                ).append(
+                                        $("<td></td>").html(dataNum[i])
+                                )
+                        )
+                    }
                 },
                 error:function (err) {
                     console.error(err);
