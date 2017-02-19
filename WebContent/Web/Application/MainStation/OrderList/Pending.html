@@ -206,6 +206,8 @@
         layerOpen(layerId,layerTitle);
         $("." + layerId).show();
     }
+
+//    订单详情AJAX请求
     function layerOpen(iid,title) {
         if(iid == "orderInformation"){
             $.ajax({
@@ -217,7 +219,7 @@
                 },
                 success:function (data) {
                     console.log(data);
-                    alert(1);
+
                 },
                 error:function (err) {
                     console.error(err);
