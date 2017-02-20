@@ -148,11 +148,11 @@
                 <label></label>
                 <div style="width: 100%">
                     <span>请输入快递信息</span>
-                    <input class="form-control" type="number" style="width: 90%;" placeholder="输入物流订单号">
+                    <input class="form-control" id="orderN" type="number" style="width: 90%;" placeholder="输入物流订单号">
                 </div>
                 <label>备注</label>
                 <div>
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                    <textarea name="" id="beizhu" cols="30" rows="10"></textarea>
                 </div>
             </div>
             <div class="divForLayerButton">
@@ -235,8 +235,8 @@
     var OID;
     function layerOP(e,id) {
         OID = id;
-        $(".orderCheck input[type=number]").val("");
-        $(".orderCheck textarea").val("");
+//        $(".orderCheck input[type=number]").val("");
+//        $(".orderCheck textarea").val("");
         var layerId = $(e).attr("name");
         var layerTitle = $(e).val();
         $("." + layerId).show();
@@ -300,6 +300,24 @@
             closeOnConfirm: false
         }, function () {
             swal("确认发货成功！", "操作成功。", "success");
+            var orderN = $("#orderN").val();
+            var beizhu = $("#beizhu").val();
+            $.ajax({
+                url:"http://Zero:8080/Tickets/Web/Application/confirmSend.action",
+                method:"POST",
+                dataType:"jsonp",
+                data:{
+                    ordersId:OID,
+                    ordersInfo:beizhu,
+                    logisticsId:orderN
+                },
+                success:function (data) {
+                    console.log(data);
+                },
+                error:function (err) {
+                    console.error(err);
+                }
+            });
             $("#" + OID).remove();
         });
     }

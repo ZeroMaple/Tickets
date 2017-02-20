@@ -24,6 +24,9 @@
     .orderInformation {
         display: none;
     }
+    .DivForLayer .layui-layer-content {
+        height:auto !important;
+    }
 </style>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -103,7 +106,7 @@
                     <th>所需数量</th>
                 </tr>
                 </thead>
-                <tbody class="">
+                <tbody class="layerTable">
                 <tr class="gradeX">
                     <td>001</td>
                     <td>福利彩票</td>
@@ -152,20 +155,23 @@
                 console.log(data);
                 for(var i = 0;i < data.length;i++){
                     var time = new Date(data[i].ordersDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
+                    var time_ = new Date(data[i].reviewDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
+                    var time_con = new Date(data[i].completeDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
+
                     $(".completedTable").append(
                             $("<tr></tr>").attr("class","gradeX").append(
                                     $("<td></td>").html(data[i].ordersId)
                             ).append(
                                     $("<td></td>").html(time)
                             ).append(
-                                    $("<td></td>").html("2016.12.13 11:54:12")
+                                    $("<td></td>").html(time_)
                             ).append(
-                                    $("<td></td>").html("2016.12.13 11:54:12")
+                                    $("<td></td>").html(time_con)
                             ).append(
                                     $("<td></td>").html(data[i].user.userName)
                             ).append(
                                     $("<td></td>").append(
-                                            $("<input>").attr("type","button").attr("name","orderInformation").attr("onclick","layerOP(this)").attr("class","btn btn-default").attr("value","订单详情")
+                                            $("<input>").attr("type","button").attr("name","orderInformation").attr("onclick","layerOP(this," + data[i].ordersId + ")").attr("class","btn btn-default").attr("value","订单详情")
                                     )
                             )
                     );
@@ -186,13 +192,46 @@
 //        layerOpen(layerId,layerTitle);
 //        $("." + layerId).show();
 //    });
-    function layerOP(e) {
+    var OID;
+    function layerOP(e,iid) {
+        OID = iid;
         var layerId = $(e).attr("name");
         var layerTitle = $(e).val();
         $("." + layerId).show();
         layerOpen(layerId,layerTitle);
     }
     function layerOpen(iid,title) {
+        if(iid == "orderInformation"){
+            $(".layerTable").empty();
+            $.ajax({
+                url:"http://Zero:8080/Tickets/Web/Application/ordersInfo.action",
+                method:"POST",
+                dataType:"jsonp",
+                data:{
+                    ordersId:OID
+                },
+                success:function (data) {
+                    console.log(data);
+                    var dataId = data.ticketId.split(",");
+                    var dataName = data.ticket.ticketName.split(",");
+                    var dataNum = data.ordersNum.split(",");
+                    for(var i = 0;i < dataId.length;i++){
+                        $(".layerTable").append(
+                                $("<tr></tr>").attr("class","gradeX").append(
+                                        $("<td></td>").html(dataId[i])
+                                ).append(
+                                        $("<td></td>").html(dataName[i])
+                                ).append(
+                                        $("<td></td>").html(dataNum[i])
+                                )
+                        )
+                    }
+                },
+                error:function (err) {
+                    console.error(err);
+                }
+            });
+        }
         layer.open({
             type: 1,
             title: [title, 'font-size:18px;'],
