@@ -42,6 +42,15 @@
         margin-top: 5px;
         display: none;
     }
+    .tipsFunction span {
+        background-color: rgba(255,255,255,0.5);
+        padding: 10px;
+        margin: 0 10px;
+        -webkit-border-radius:3px;
+        -moz-border-radius:3px;
+        border-radius:3px;
+        cursor: pointer;
+    }
     textarea {
         resize: none;
         width: 100%;
@@ -65,51 +74,16 @@
     <div class="col-sm-12">
         <div class="wrapper wrapper-content animated fadeInUp">
             <ul class="notes">
-                <li>
-                    <p class="tipsFunction">
-                        <span onclick="edit()"><i class="icon iconfont icon-edit"></i></span>
-                        <span onclick="layerOrder('删除',this)"><i class="icon iconfont icon-del1"></i></span>
-                    </p>
-                    <div class="up" onclick="changeStatus(this)">
-                        <h2>体育彩票</h2>
-                        <p>狭义的体育彩票指的是以体育比赛为媒体发行的彩票，亦可称为竞猜型体育彩票。如足球彩票、棒球彩票、赛马彩票等；广义的体育彩票指的是发行彩票的目的与体育相关的各类彩票。</p>
-                    </div>
-                </li>
-                <li>
-                    <p class="tipsFunction">
-                        <span>编辑</span>
-                        <span>删除</span>
-                    </p>
-                    <div class="down" onclick="changeStatus(this)">
-                        <h2>移动设备优先</h2>
-                        <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在 Bootstrap 3 中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增……</p>
-                    </div>
-
-                </li>
-                <li>
-                    <div>
-                        <h2>排版与链接</h2>
-                        <p>Bootstrap 排版、链接样式设置了基本的全局样式。分别是： 为 body 元素设置 background-color: #fff; 使用 @font-family-base、@font-size-base 和……。</p>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h4>Normalize.css</h4>
-                        <p>为了增强跨浏览器表现的一致性，我们使用了 Normalize.css，这是由 Nicolas Gallagher 和 Jonathan Neal 维护的一个CSS 重置样式库。</p>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h4>布局容器</h4>
-                        <p>Bootstrap 需要为页面内容和栅格系统包裹一个 .container 容器。我们提供了两个作此用处的类。注意，由于 padding 等属性的原因，这两种 容器类不能互相嵌套。</p>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h4>栅格系统</h4>
-                        <p>Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。它包含了易于使用的预定义类，还有强大的mixin 用于生成更具语义的布局。</p>
-                    </div>
-                </li>
+                <!--<li>-->
+                    <!--<p class="tipsFunction">-->
+                        <!--<span onclick="edit()"><i class="icon iconfont icon-edit"></i></span>-->
+                        <!--<span onclick="layerOrder('删除',this)"><i class="icon iconfont icon-del1"></i></span>-->
+                    <!--</p>-->
+                    <!--<div class="up" onclick="changeStatus(this)">-->
+                        <!--<h2>体育彩票</h2>-->
+                        <!--<p>狭义的体育彩票指的是以体育比赛为媒体发行的彩票，亦可称为竞猜型体育彩票。如足球彩票、棒球彩票、赛马彩票等；广义的体育彩票指的是发行彩票的目的与体育相关的各类彩票。</p>-->
+                    <!--</div>-->
+                <!--</li>-->
             </ul>
         </div>
     </div>
@@ -122,6 +96,12 @@
                 <div class="col-sm-4 control-label">彩票名称</div>
                 <div class="col-sm-8">
                     <input class="TicketsName" type="text" />
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-sm-4 control-label">彩票价格</div>
+                <div class="col-sm-8">
+                    <input class="TicketsPrice" type="number" />
                 </div>
             </div>
             <div>
@@ -148,7 +128,53 @@
 <script src="../../../Resources/js/content.js?v=1.0.0"></script>
 
 <script>
+    $.ajax({
+        url:"http://Zero:8080/Tickets/Web/Application/listTickets.action",
+        method:"POST",
+        dataType:"jsonp",
+        data:{},
+        success:function (data) {
+            console.log(data);
+            for(var i = 0; i<data.length;i++){
+                var shelves,display;
+                if(data[i].ticketShelves){
+                   shelves = "up";
+                    display = "none";
+                }else {
+                    shelves = "down";
+                    display = "block";
+                }
+                $(".notes").append(
+                        $("<li></li>").attr("id",data[i].ticketId).append(
+                                $("<p></p>").attr("class","tipsFunction").css("display",display).append(
+                                        $("<span></span>").attr("onclick","edit()").append(
+                                                $("<i></i>").attr("class","icon iconfont icon-edit")
+                                        )
+                                ).append(
+                                        $("<span></span>").attr("onclick","layerOrder('删除',this," + data[i].ticketId + ")").append(
+                                                $("<i></i>").attr("class","icon iconfont icon-del1")
+                                        )
+                                )
+                        ).append(
+                                $("<div></div>").attr("class",shelves).attr("onclick","changeStatus(this," + data[i].ticketId + ")").append(
+                                        $("<h2></h2>").html(data[i].ticketName)
+                                ).append(
+                                        $("<p></p>").html(data[i].ticketInfo)
+                                )
+                        )
+                );
+            }
+        },
+        error:function (err) {
+            console.error(err);
+        }
+    });
+
+//    新增彩票
     $("#addTicket").click(function () {
+        $(".TicketsName").val("");
+        $(".TicketsPrice").val("");
+        $(".TicketsDis").val("");
         layer.open({
             type: 1,
             title: ['编辑', 'font-size:18px;'],
@@ -162,27 +188,45 @@
             scrollbar: false,
             btn: ['提交'], //可以无限个按钮
             yes: function(index, layero){
-                $(".notes").append(
-                        $("<li></li>").append(
-                                $("<p></p>").attr("class","tipsFunction").css("display","block").append(
-                                        $("<span></span>").attr("onclick","edit()").append(
-                                                $("<i></i>").attr("class","icon iconfont icon-edit")
-                                        )
-                                ).append(
-                                        $("<span></span>").attr("onclick","layerOrder('删除',this)").append(
-                                                $("<i></i>").attr("class","icon iconfont icon-del1")
-                                        )
-                                )
-                        ).append(
-                                $("<div></div>").attr("class","down").attr("onclick","changeStatus(this)").append(
-                                        $("<h2></h2>").html($(".TicketsName").val())
-                                ).append(
-                                        $("<p></p>").html($(".TicketsDis").val())
-                                )
-                        )
-                );
-                $(".TicketsName").val('');
-                $(".TicketsDis").val('');
+                var ticketName = $(".TicketsName").val();
+                var ticketPrice = $(".TicketsPrice").val();
+                var ticketInfo = $(".TicketsDis").val();
+                $.ajax({
+                    url:"http://Zero:8080/Tickets/Web/Application/addTickets.action",
+                    method:"POST",
+                    dataType:"jsonp",
+                    data:{
+                        ticketName: ticketName,
+                        ticketPrice: ticketPrice,
+                        ticketInfo: ticketInfo
+                    },
+                    success:function (data) {
+                        console.log(data);
+//                        $(".notes").append(
+//                                        $("<div></div>").attr("class","down").attr("onclick","changeStatus(this)").append(
+//                                                $("<li></li>").append(
+//                                                        $("<p></p>").attr("class","tipsFunction").css("display","block").append(
+//                                                                $("<span></span>").attr("onclick","edit()").append(
+//                                                                        $("<i></i>").attr("class","icon iconfont icon-edit")
+//                                                                )
+//                                                        ).append(
+//                                                                $("<span></span>").attr("onclick","layerOrder('删除',this)").append(
+//                                                                        $("<i></i>").attr("class","icon iconfont icon-del1")
+//                                                                )
+//                                                        )
+//                                                ).append(
+//                                                $("<h2></h2>").html(ticketName)
+//                                        ).append(
+//                                                $("<p></p>").html(ticketInfo)
+//                                        )
+//                                )
+//                        );
+                        window.location.reload();
+                    },
+                    error:function (err) {
+                        console.error(err);
+                    }
+                });
                 layer.closeAll();
             },
             content: $(".editLayer")
@@ -190,14 +234,15 @@
     });
 </script>
 <script>
-    function changeStatus(e) {
+    function changeStatus(e,id) {
         if($(e).hasClass("up")){
-            layerOrder("下架",e);
+            layerOrder("下架",e,id);
         }else if($(e).hasClass("down")) {
-            layerOrder("上架",e);
+            layerOrder("上架",e,id);
         }
     }
     function layerOrder(status,e,id) {
+        var ticketShelves;
         swal({
             title: "您确定要" + status + "该彩票吗？",
             text: "确认前请务必仔细确认！",
@@ -211,12 +256,43 @@
             if(status == "上架"){
                 $(e).removeClass("down").addClass("up");
                 $(e).prev().fadeOut();
+                ticketShelves = "true"
             }else if(status == "下架") {
                 $(e).removeClass("up").addClass("down");
                 $(e).prev().fadeIn();
+                ticketShelves = "false"
             }else if(status == "删除"){
+                $.ajax({
+                    url:"http://Zero:8080/Tickets/Web/Application/deleteTickets.action",
+                    method:"POST",
+                    dataType:"jsonp",
+                    data:{
+                        ticketId: id
+                    },
+                    success:function (data) {
+                        console.log(data);
+                    },
+                    error:function (err) {
+                        console.error(err);
+                    }
+                });
                 $(e).parent().parent().remove();
             }
+            $.ajax({
+                url:"http://Zero:8080/Tickets/Web/Application/confirmShelves.action",
+                method:"POST",
+                dataType:"jsonp",
+                data:{
+                    ticketId: id,
+                    ticketShelves: ticketShelves
+                },
+                success:function (data) {
+                    console.log(data);
+                },
+                error:function (err) {
+                    console.error(err);
+                }
+            });
         });
     }
     $('.w-closeLayer').click(function () {
