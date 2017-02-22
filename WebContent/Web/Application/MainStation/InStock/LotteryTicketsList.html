@@ -147,7 +147,7 @@
                 $(".notes").append(
                         $("<li></li>").attr("id",data[i].ticketId).append(
                                 $("<p></p>").attr("class","tipsFunction").css("display",display).append(
-                                        $("<span></span>").attr("onclick","edit()").append(
+                                        $("<span></span>").attr("onclick","edit(this," + data[i].ticketPrice + "," + data[i].ticketId + ")").append(
                                                 $("<i></i>").attr("class","icon iconfont icon-edit")
                                         )
                                 ).append(
@@ -158,6 +158,8 @@
                         ).append(
                                 $("<div></div>").attr("class",shelves).attr("onclick","changeStatus(this," + data[i].ticketId + ")").append(
                                         $("<h2></h2>").html(data[i].ticketName)
+                                ).append(
+                                        $("<span></span>").html("单价:" + data[i].ticketPrice + "元")
                                 ).append(
                                         $("<p></p>").html(data[i].ticketInfo)
                                 )
@@ -299,8 +301,14 @@
         layer.closeAll();
         $(".editLayer").hide();
     });
-    function edit() {
+    function edit(e,price,id) {
         $(".editLayer").show();
+        var name = $(e).parent().next().children("h2").html();
+        var info = $(e).parent().next().children("p").html();
+        $(".TicketsName").val(name);
+        $(".TicketsPrice").val(price);
+        $(".TicketsDis").val(info);
+
         layer.open({
             type: 1,
             title: ['编辑', 'font-size:18px;'],
@@ -314,7 +322,28 @@
             scrollbar: false,
             btn: ['提交'], //可以无限个按钮
             btn1: function(index, layero){
-
+                var new_name = $(".TicketsName").val();
+                var new_price = $(".TicketsPrice").val();
+                var new_info = $(".TicketsDis").val();
+                console.log(new_name+","+new_price+","+new_info);
+                $.ajax({
+                    url:"http://Zero:8080/Tickets/Web/Application/updateTickets.action",
+                    method:"POST",
+                    dataType:"jsonp",
+                    data:{
+                        ticketId:id,
+                        ticketName: new_name,
+                        ticketPrice: new_price,
+                        ticketInfo: new_info
+                    },
+                    success:function (data) {
+                        console.log(data);
+                        window.location.reload();
+                    },
+                    error:function (err) {
+                        console.error(err);
+                    }
+                });
             },
             content: $(".editLayer")
         });
