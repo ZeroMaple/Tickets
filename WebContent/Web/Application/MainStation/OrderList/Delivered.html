@@ -235,45 +235,43 @@
     var OID;
     function layerOP(e,id) {
         OID = id;
-//        $(".orderCheck input[type=number]").val("");
-//        $(".orderCheck textarea").val("");
         var layerId = $(e).attr("name");
         var layerTitle = $(e).val();
         $("." + layerId).show();
         layerOpen(layerId,layerTitle);
     }
     function layerOpen(iid,title) {
-        if(iid == "orderInformation"){
-            $(".layerTable").empty();
-            $.ajax({
-                url:"http://Zero:8080/Tickets/Web/Application/ordersInfo.action",
-                method:"POST",
-                dataType:"jsonp",
-                data:{
-                    ordersId:OID
-                },
-                success:function (data) {
-                    console.log(data);
-                    var dataId = data.ticketId.split(",");
-                    var dataName = data.ticket.ticketName.split(",");
-                    var dataNum = data.ordersNum.split(",");
-                    for(var i = 0;i < dataId.length;i++){
-                        $(".layerTable").append(
-                                $("<tr></tr>").attr("class","gradeX").append(
-                                        $("<td></td>").html(dataId[i])
-                                ).append(
-                                        $("<td></td>").html(dataName[i])
-                                ).append(
-                                        $("<td></td>").html(dataNum[i])
-                                )
-                        )
-                    }
-                },
-                error:function (err) {
-                    console.error(err);
-                }
-            });
-        }
+//        if(iid == "orderInformation"){
+//            $(".layerTable").empty();
+//            $.ajax({
+//                url:"http://Zero:8080/Tickets/Web/Application/ordersInfo.action",
+//                method:"POST",
+//                dataType:"jsonp",
+//                data:{
+//                    ordersId:OID
+//                },
+//                success:function (data) {
+//                    console.log(data);
+//                    var dataId = data.ticketId.split(",");
+//                    var dataName = data.ticket.ticketName.split(",");
+//                    var dataNum = data.ordersNum.split(",");
+//                    for(var i = 0;i < dataId.length;i++){
+//                        $(".layerTable").append(
+//                                $("<tr></tr>").attr("class","gradeX").append(
+//                                        $("<td></td>").html(dataId[i])
+//                                ).append(
+//                                        $("<td></td>").html(dataName[i])
+//                                ).append(
+//                                        $("<td></td>").html(dataNum[i])
+//                                )
+//                        )
+//                    }
+//                },
+//                error:function (err) {
+//                    console.error(err);
+//                }
+//            });
+//        }
         layer.open({
             type: 1,
             title: [title, 'font-size:18px;'],

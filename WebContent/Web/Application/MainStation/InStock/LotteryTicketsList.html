@@ -256,11 +256,11 @@
             if(status == "上架"){
                 $(e).removeClass("down").addClass("up");
                 $(e).prev().fadeOut();
-                ticketShelves = "true"
+                ticketShelves = "false"
             }else if(status == "下架") {
                 $(e).removeClass("up").addClass("down");
                 $(e).prev().fadeIn();
-                ticketShelves = "false"
+                ticketShelves = "true"
             }else if(status == "删除"){
                 $.ajax({
                     url:"http://Zero:8080/Tickets/Web/Application/deleteTickets.action",

@@ -206,8 +206,8 @@
         $(".ReasonText").val('');
         var layerId = $(e).attr("name");
         var layerTitle = $(e).val();
-        layerOpen(layerId,layerTitle);
         $("." + layerId).show();
+        layerOpen(layerId,layerTitle);
     }
 
 //    订单详情AJAX请求
