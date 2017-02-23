@@ -31,7 +31,7 @@
                 <div class="row row-sm text-center">
                     <div class="col-xs-3">
                         <div class="panel padder-v item bg-success_">
-                            <div class="h1 text-fff font-thin h1">121</div>
+                            <div id="ticketNum" class="h1 text-fff font-thin h1">--</div>
                             <span class="text-muted text-xs">彩票种类</span>
                             <div class="top text-right w-full">
                                 <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -40,8 +40,8 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="panel padder-v item bg-info_">
-                            <div class="h1 text-fff font-thin h1">21</div>
-                            <span class="text-muted text-xs">当月彩票新增数量</span>
+                            <div id="downTicket" class="h1 text-fff font-thin h1">--</div>
+                            <span class="text-muted text-xs">下架彩票数量</span>
                             <div class="top text-right w-full">
                                 <i class="fa fa-caret-down text-warning m-r-sm"></i>
                             </div>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="panel padder-v item bg-warning_">
-                            <div class="h1 text-fff font-thin h1">100</div>
+                            <div id="shelvesTicket" class="h1 text-fff font-thin h1">--</div>
                             <span class="text-muted text-xs">上架彩票数量</span>
                             <div class="top text-right w-full">
                                 <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="panel padder-v bg-danger_">
-                            <div class="font-thin text-fff h1">福利彩票</div>
+                            <div id="maxTicket" class="font-thin text-fff h1">--</div>
                             <span class="text-muted text-xs">当月销售量最高的彩票</span>
                             <div class="bottom text-left">
                                 <i class="fa fa-caret-up text-warning m-l-sm"></i>
@@ -69,7 +69,7 @@
                 <div class="row row-sm text-center">
                     <div class="col-xs-3">
                         <div class="panel padder-v item bg-primary">
-                            <div class="h1 text-fff font-thin h1">321</div>
+                            <div id="monthSell" class="h1 text-fff font-thin h1">--</div>
                             <span class="text-muted text-xs">当月彩票销售量</span>
                             <div class="top text-right w-full">
                                 <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="panel padder-v item bg-info">
-                            <div class="h1 text-fff font-thin h1">521</div>
+                            <div id="allSell" class="h1 text-fff font-thin h1">--</div>
                             <span class="text-muted text-xs">彩票销售总量</span>
                             <div class="top text-right w-full">
                                 <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="panel padder-v bg-danger_">
-                            <div class="font-thin text-fff h1">天津分站</div>
+                            <div id="maxSellName" class="font-thin text-fff h1">--</div>
                             <span class="text-muted text-xs">当月销售量最高的分站</span>
                             <div class="bottom text-left">
                                 <i class="fa fa-caret-up text-warning m-l-sm"></i>
@@ -98,7 +98,7 @@
                 <div class="row row-sm text-center">
                     <div class="col-xs-3">
                         <div class="panel padder-v item bg-success_">
-                            <div class="h1 text-fff font-thin h1">121</div>
+                            <div id="subNum" class="h1 text-fff font-thin h1">--</div>
                             <span class="text-muted text-xs">分站总数</span>
                             <div class="top text-right w-full">
                                 <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -107,7 +107,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="panel padder-v item bg-info_">
-                            <div class="h1 text-fff font-thin h1">21</div>
+                            <div id="monthSubAdd" class="h1 text-fff font-thin h1">--</div>
                             <span class="text-muted text-xs">当月分站增加数</span>
                             <div class="top text-right w-full">
                                 <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -116,7 +116,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="panel padder-v item bg-success_">
-                            <div class="h1 text-fff font-thin h1">100</div>
+                            <div id="monthOrderNum" class="h1 text-fff font-thin h1">--</div>
                             <span class="text-muted text-xs">当月订单数</span>
                             <div class="top text-right w-full">
                                 <i class="fa fa-caret-down text-warning m-r-sm"></i>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="panel padder-v bg-info_ ">
-                            <div class="font-thin text-fff h1">555</div>
+                            <div id="allOrder" class="font-thin text-fff h1">--</div>
                             <span class="text-muted text-xs">订单总数</span>
                             <div class="bottom text-left">
                                 <i class="fa fa-caret-up text-warning m-l-sm"></i>
@@ -137,4 +137,34 @@
         </div>
     </section>
 </body>
+
+<!-- 全局js -->
+<script src="../Resources/js/jquery.min.js?v=2.1.4"></script>
+<script src="../Resources/js/bootstrap.min.js?v=3.3.6"></script>
+<script>
+    $.ajax({
+        url:"http://Zero:8080/Tickets/Web/Application/serachOrders.action",
+        method:"POST",
+        dataType:"jsonp",
+        data:{},
+        success:function (data) {
+            console.log(data);
+            $("#ticketNum").html("66");         //彩票种类
+            $("#downTicket").html("10");        //下架彩票数量
+            $("#shelvesTicket").html("56");     //上架彩票数量
+            $("#maxTicket").html("福利材彩票");         //当月销售量最高的彩票
+            $("#monthSell").html("50");         //当月彩票销售量
+            $("#allSell").html("1000");           //彩票销售总量
+            $("#maxSellName").html("天津分站");       //当月销售量最高的分站
+            $("#subNum").html("10");            //分站总数
+            $("#monthSubAdd").html("2");            //当月分站增加数
+            $("#monthOrderNum").html("100");     //当月订单数
+            $("#allOrder").html("200");          //订单总数
+        },
+        error:function (err) {
+            console.error(err);
+        }
+    });
+</script>
+
 </html>
