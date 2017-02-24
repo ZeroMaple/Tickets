@@ -79,18 +79,7 @@
                                         <option value="体育彩票">体育彩票</option>
                                     </select>
                                     <div class="col-sm-1"></div>
-                                    <div class="col-sm-4">
-                                        <input type="number" placeholder="请填写进货数量"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 control-label">
-                                    <select class="col-sm-6 addTicketSelect">
-                                        <option value="0"> </option>
-                                        <option value="福利彩票">福利彩票</option>
-                                        <option value="体育彩票">体育彩票</option>
-                                    </select>
-                                    <div class="col-sm-1"></div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <input type="number" placeholder="请填写进货数量"/>
                                     </div>
                                 </div>
@@ -161,8 +150,12 @@
                 $("<div></div>").attr("class","col-sm-8 control-label").append(select).append(
                         $("<div></div>").attr("class","col-sm-1")
                 ).append(
-                        $("<div></div>").attr("class","col-sm-4").append(
+                        $("<div></div>").attr("class","col-sm-3").append(
                                 $("<input>").attr("type","number").attr("placeholder","请填写进货数量")
+                        )
+                ).append(
+                        $("<div></div>").attr("class","col-sm-1").append(
+                                $("<button></button>").attr("class","btn btn-danger").attr("onclick","listDel(this)").html("删除")
                         )
                 )
         )
@@ -181,6 +174,11 @@
         });
         console.log(list);
     });
+
+//    delete
+    function listDel(e) {
+        $(e).parent().parent().remove();
+    }
 
 </script>
 
