@@ -212,17 +212,17 @@
                 },
                 success:function (data) {
                     console.log(data);
-                    var dataId = data.ticketId.split(",");
-                    var dataName = data.ticket.ticketName.split(",");
-                    var dataNum = data.ordersNum.split(",");
-                    for(var i = 0;i < dataId.length;i++){
+                    for(var i = 0;i < data.length;i++){
+                        var dataId = data[i].tickets.ticketId;
+                        var dataName = data[i].tickets.ticketName;
+                        var dataNum = data[i].ordersNum;
                         $(".layerTable").append(
                                 $("<tr></tr>").attr("class","gradeX").append(
-                                        $("<td></td>").html(dataId[i])
+                                        $("<td></td>").html(dataId)
                                 ).append(
-                                        $("<td></td>").html(dataName[i])
+                                        $("<td></td>").html(dataName)
                                 ).append(
-                                        $("<td></td>").html(dataNum[i])
+                                        $("<td></td>").html(dataNum)
                                 )
                         )
                     }
