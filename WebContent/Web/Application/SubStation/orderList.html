@@ -137,33 +137,34 @@
     });
 
     //    ajax
-    //    $.ajax({
-    //        url:"",
-    //        method:"POST",
-    //        dataType:"jsonp",
-    //        data:{},
-    //        success:function (data) {
-    //            console.log(data);
-    //        },
-    //        error:function (err) {
-    //            console.error(err);
-    //        }
-    //    });
-    $(".LotteryTicketTable").append(
-            $("<tr></tr>").attr("class","gradeX").append(
-                    $("<td></td>").html("006")
-            ).append(
-                    $("<td></td>").html("2016.12.13 11:54:12")
-            ).append(
-                    $("<td></td>").html("待发货")
-            ).append(
-                    $("<td></td>").html("雪天封路，暂时无法发货")
-            ).append(
-                    $("<td></td>").append(
-                            $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("onclick","layerOP(this)").attr("value","订单详情")
-                    )
-            )
-    );
+        $.ajax({
+            url:"http://Zero:8080/Tickets/Web/Application/usersOrders.action",
+            method:"POST",
+            dataType:"jsonp",
+            data:{},
+            success:function (data) {
+                console.log(data);
+                $(".LotteryTicketTable").append(
+                        $("<tr></tr>").attr("class","gradeX").append(
+                                $("<td></td>").html("006")
+                        ).append(
+                                $("<td></td>").html("2016.12.13 11:54:12")
+                        ).append(
+                                $("<td></td>").html("待发货")
+                        ).append(
+                                $("<td></td>").html("雪天封路，暂时无法发货")
+                        ).append(
+                                $("<td></td>").append(
+                                        $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("onclick","layerOP(this)").attr("value","订单详情")
+                                )
+                        )
+                );
+            },
+            error:function (err) {
+                console.error(err);
+            }
+        });
+
     //    layer
     $(".w-closeLayer").click(function () {
         layer.closeAll();
