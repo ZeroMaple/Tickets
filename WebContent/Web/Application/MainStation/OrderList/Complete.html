@@ -213,7 +213,7 @@
                 success:function (data) {
                     console.log(data);
                     for(var i = 0;i < data.length;i++){
-                        var dataId = data[i].tickets.ticketId;
+                        var dataId = data[i].o_ticketsId;
                         var dataName = data[i].tickets.ticketName;
                         var dataNum = data[i].ordersNum;
                         $(".layerTable").append(
