@@ -143,9 +143,15 @@
             dataType:"jsonp",
             data:{},
             success:function (data) {
-//                console.log(data);
+                console.log(data);
                 for(var i = 0;i < data.length;i++){
                     var time = new Date(data[i].ordersDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
+                    var info;
+                    if(data[i].ordersStatus == "已驳回"){
+                        info = data[i].ordersReason;
+                    }else {
+                        info = data[i].ordersInfo
+                    }
                     $(".LotteryTicketTable").append(
                             $("<tr></tr>").attr("class","gradeX").append(
                                     $("<td></td>").html(data[i].ordersId)
@@ -154,7 +160,7 @@
                             ).append(
                                     $("<td></td>").html(data[i].ordersStatus)
                             ).append(
-                                    $("<td></td>").html(data[i].ordersInfo)
+                                    $("<td></td>").html(info)
                             ).append(
                                     $("<td></td>").append(
                                             $("<input>").attr("type","button").attr("name","orderInformation").attr("class","btn btn-default w-layerButton").attr("onclick","layerOP(this," + data[i].ordersId + ")").attr("value","订单详情")
@@ -198,17 +204,15 @@
                         var dataId = data[i].o_ticketsId;
                         var dataName = data[i].tickets.ticketName;
                         var dataNum = data[i].ordersNum;
-                        for(var i = 0;i < dataId.length;i++){
-                            $(".layerTable").append(
-                                    $("<tr></tr>").attr("class","gradeX").append(
-                                            $("<td></td>").html(dataId[i])
-                                    ).append(
-                                            $("<td></td>").html(dataName[i])
-                                    ).append(
-                                            $("<td></td>").html(dataNum[i])
-                                    )
-                            )
-                        }
+                        $(".layerTable").append(
+                                $("<tr></tr>").attr("class","gradeX").append(
+                                        $("<td></td>").html(dataId[i])
+                                ).append(
+                                        $("<td></td>").html(dataName[i])
+                                ).append(
+                                        $("<td></td>").html(dataNum[i])
+                                )
+                        )
                     }
                 },
                 error:function (err) {
