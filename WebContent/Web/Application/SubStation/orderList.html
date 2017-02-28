@@ -191,14 +191,13 @@
                         var dataId = data[i].o_ticketsId;
                         var dataName = data[i].tickets.ticketName;
                         var dataNum = data[i].ordersNum;
-                        console.log(dataId,dataName,dataNum);
                         $(".layerTable").append(
                                 $("<tr></tr>").attr("class","gradeX").append(
-                                        $("<td></td>").html(dataId[i])
+                                        $("<td></td>").html(dataId)
                                 ).append(
-                                        $("<td></td>").html(dataName[i])
+                                        $("<td></td>").html(dataName)
                                 ).append(
-                                        $("<td></td>").html(dataNum[i])
+                                        $("<td></td>").html(dataNum)
                                 )
                         )
                     }
