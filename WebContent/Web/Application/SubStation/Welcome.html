@@ -104,15 +104,12 @@
         data:{},
         success:function (data) {
             console.log(data);
-            $("#ticketNum").html("66");         //本站彩票种类
-            $("#maxTicket").html("福利材彩票");         //当月销售量最高的彩票
-            $("#monthSell").html("50");         //当月彩票销售量
-            $("#allSell").html("1000");           //彩票销售总量
-            $("#maxSellName").html("天津分站");       //当月销售量最高的分站
-            $("#subNum").html("10");            //分站总数
-            $("#monthSubAdd").html("2");            //当月分站增加数
-            $("#monthOrderNum").html("100");     //当月订单数
-            $("#allOrder").html("200");          //订单总数
+            $("#ticketNum").html(data.ticketNum);         //本站彩票种类
+            $("#maxTicket").html(data.ticketName);         //当月销售量最高的彩票
+            $("#monthSell").html(data.m_ordersIdNum);         //当月彩票销售量
+            $("#allSell").html(data.m_ordersNum);           //彩票销售总量
+            $("#monthOrderNum").html(data.y_ordersIdNum);     //当月订单数
+            $("#allOrder").html(data.y_ordersNum);          //订单总数
         },
         error:function (err) {
             console.error(err);
