@@ -17,6 +17,29 @@
     <link href="../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
 
 </head>
+<style>
+    .addTicketSelect {
+        padding:3px;
+        -webkit-border-radius:2px;
+        -moz-border-radius:2px;
+        border-radius:2px;
+    }
+    .help-block {
+        margin-top: 0 !important;
+    }
+    input {
+        width: 100%;
+        padding:3px;
+        -webkit-border-radius:2px;
+        -moz-border-radius:2px;
+        border-radius:2px;
+        border:1px solid rgb(169, 169, 169);
+    }
+    .row {
+        margin: 0 ;
+        padding-left: 3%;
+    }
+</style>
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -45,57 +68,27 @@
                     <h5>彩票订单申请</h5>
                 </div>
                 <div class="ibox-content">
+                    <h4>请填写彩票的种类和数量</h4>
                     <form class="form-horizontal m-t" id="signupForm">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">站点名称：</label>
-                            <div class="col-sm-8">
-                                <input id="userName" name="userName" class="form-control" type="text">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>请慎重填写站点名称，已经提交无法修改</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">代理商账号：</label>
-                            <div class="col-sm-8">
-                                <input id="userAccount" name="userAccount" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">代理商密码：</label>
-                            <div class="col-sm-8">
-                                <input id="userPassWord" name="userPassWord" class="form-control" type="password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">确认密码：</label>
-                            <div class="col-sm-8">
-                                <input id="confirm_password" name="confirm_password" class="form-control" type="password">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">站点地址</label>
-                            <div class="col-sm-8">
-                                <input id="address" name="address" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">联系方式</label>
-                            <div class="col-sm-8">
-                                <input id="phone" name="phone" class="form-control" type="number">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-3">
-                                <div>
-                                    <label>
-                                        <input type="checkbox" class="checkbox" name="agree" id="agree"> 代理商已经提交相关信息资料
-                                    </label>
+                            <div class="row addRow">
+                                <div class="col-sm-8 control-label">
+                                    <select class="col-sm-6 addTicketSelect">
+                                        <option value="0"> </option>
+                                        <option value="福利彩票">福利彩票</option>
+                                        <option value="体育彩票">体育彩票</option>
+                                    </select>
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-3">
+                                        <input type="number" placeholder="请填写进货数量"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit" id="add">创建站点</button>
+                                <button class="btn" type="submit" id="submit">提交订单</button>
                             </div>
                         </div>
                     </form>
@@ -108,47 +101,11 @@
 
 
 <!-- 全局js -->
-<script src="../../../Resources/js/jquery.min.js?v=2.1.4"></script>
-<script src="../../../Resources/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="../../Resources/js/jquery.min.js?v=2.1.4"></script>
+<script src="../../Resources/js/bootstrap.min.js?v=3.3.6"></script>
 
 <!-- 自定义js -->
-<script src="../../../Resources/js/content.js?v=1.0.0"></script>
-<script>
-    for(var i = 0; i < document.forms.length; i++) {
-        document.forms[i].onsubmit = function() {return false;}
-    }
-    //  AJAX
-    $("#add").click(function () {
-        var userName = $("#userName").val();
-        var userAccount = $("#userAccount").val();
-        var userPassWord = $("#userPassWord").val();
-        var userAddress = $("#address").val();
-        var userPhone = $("#phone").val();
-        var isChecked = $("#agree").is(':checked');
-        if(userName == "" || userAccount == "" || userPassWord == "" || userAddress == "" || userPhone == ""){
-            return;
-        }else if(isChecked){
-            $.ajax({
-                url:"http://Zero:8080/Tickets/Web/Application/registered.action",
-                method:"POST",
-                dataType:"jsonp",
-                data:{
-                    userName:userName,
-                    userAccount:userAccount,
-                    userPassWord:userPassWord,
-                    userAddress:userAddress,
-                    userPhone:userPhone
-                },
-                success:function (data) {
-                    console.log(data);
-                },
-                error:function (err) {
-                    console.error(err);
-                }
-            });
-        }
-    });
-</script>
+<script src="../../Resources/js/content.js?v=1.0.0"></script>
 
 <!-- jQuery Validation plugin javascript-->
 <script src="../../Resources/js/plugins/validate/jquery.validate.min.js"></script>
@@ -157,7 +114,73 @@
 <script src="../../Resources/js/demo/form-validate-demo.js"></script>
 
 
+<script>
+//    $.ajax({
+//        url:"http://Zero:8080/Tickets/Web/Application/registered.action",
+//        method:"POST",
+//        dataType:"jsonp",
+//        data:{
+//            userName:userName,
+//            userAccount:userAccount,
+//            userPassWord:userPassWord,
+//            userAddress:userAddress,
+//            userPhone:userPhone
+//        },
+//        success:function (data) {
+//            console.log(data);
+//        },
+//        error:function (err) {
+//            console.error(err);
+//        }
+//    });
+    for(var i = 0; i < document.forms.length; i++) {
+        document.forms[i].onsubmit = function() {return false;}
+    }
+    //  AJAX
+    $("#add").click(function () {
+        var select,option;
+        select = $("<select></select>").attr("class","col-sm-6 addTicketSelect").append(
+                $("<option></option>").attr("value"," ")
+        );
+        for(var i = 1;i < 3; i++){
+            option = $("<option></option>").attr("value",i).html("xxx彩票");
+            select.append(option);
+        }
+        $(".addRow").append(
+                $("<div></div>").attr("class","col-sm-8 control-label").append(select).append(
+                        $("<div></div>").attr("class","col-sm-1")
+                ).append(
+                        $("<div></div>").attr("class","col-sm-3").append(
+                                $("<input>").attr("type","number").attr("placeholder","请填写进货数量")
+                        )
+                ).append(
+                        $("<div></div>").attr("class","col-sm-1").append(
+                                $("<button></button>").attr("class","btn btn-danger").attr("onclick","listDel(this)").html("删除")
+                        )
+                )
+        )
+    });
 
+//    submit
+    $("#submit").click(function () {
+        var list = [];
+        $(".addRow > div").each(function () {
+            var ticketName = $(this).children("select").val();
+            var ticketNum = $(this).children("div").children("input").val();
+            list.push({
+                ticketName:ticketName,
+                ticketNum:ticketNum
+            });
+        });
+        console.log(list);
+    });
+
+//    delete
+    function listDel(e) {
+        $(e).parent().parent().remove();
+    }
+
+</script>
 
 </body>
 

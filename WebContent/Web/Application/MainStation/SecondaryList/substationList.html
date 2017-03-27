@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title> - 联系人</title>
+    <title>分站列表</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -18,6 +18,11 @@
     <link href="../../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
 
 </head>
+<style>
+    /*.dis {*/
+        /*display:none;*/
+    /*}*/
+</style>
 
 <body class="gray-bg">
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -48,14 +53,16 @@
                     $(".row").append(
                             $("<div></div>").attr("class","col-sm-4").append(
                                     $("<div></div>").attr("class","contact-box").append(
-                                            $("<a></a>").attr("href","profile.html").append(
+                                            $("<a></a>").attr("href","Substation_detail.html?id=" + data[i].userId +"").append(
                                                     $("<div></div>").attr("class","col-sm-4").append(
                                                             $("<div></div>").attr("class","text-center").append(
-                                                                    $("<img>").attr("class","img-circle m-t-xs img-responsive").attr("src","../../Resources/img/house2.png")
+                                                                    $("<img>").attr("class","img-circle m-t-xs img-responsive").attr("src","../../../Resources/img/house2.png")
                                                             )
                                                     )
                                             ).append(
                                                     $("<div></div>").attr("class","col-sm-8").append(
+                                                            $("<input>").attr("style","display:none").attr("class","dis").attr("value",data[i].userId)
+                                                    ).append(
                                                             $("<h3></h3>").append(
                                                                     $("<strong></strong>").html(data[i].userName)
                                                             )

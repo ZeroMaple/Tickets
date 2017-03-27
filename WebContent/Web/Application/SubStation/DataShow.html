@@ -1,10 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html>
 
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>数据展示</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../Resources/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../Resources/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="../../Resources/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="../../Resources/css/animate.css" rel="stylesheet">
+    <link href="../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div id="main" style="width: 100%;height:600px;"></div>
+
+<!-- 全局js -->
+<script src="../../Resources/js/jquery.min.js?v=2.1.4"></script>
+<script src="../../Resources/js/bootstrap.min.js?v=3.3.6"></script>
+
+<script src="../../Resources/js/echarts.min-new.js"></script>
+
+<script src="../../Resources/js/plugins/jeditable/jquery.jeditable.js"></script>
+
+<!-- Data Tables -->
+<script src="../../Resources/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="../../Resources/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+<!-- 自定义js -->
+<script src="../../Resources/js/content.js?v=1.0.0"></script>
+
+
+<!-- Page-Level Scripts -->
+<script>
+    var text = '{ "data" : [' +
+            '{ "name":"Runoob" , "type":"line" , "status":"zz" , "data":[10,20,30,50,70,90,110] },' +
+            '{ "name":"Google" , "url":"www.google.com" , "status":"zz" , "data":[10,30,50,70,90,110,130] },' +
+            '{ "name":"Taobao" , "url":"www.taobao.com" , "status":"zz" , "data":[70,60,50,40,30,20,10]  } ]}';
+
+    obj = JSON.parse(text);
+    console.log(obj);
+    var myChart = echarts.init(document.getElementById('main'));
+    var option = {
+        title: {
+            text: '折线图堆叠'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['Runoob','Google','Taobao']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一','周二','周三','周四','周五','周六','周日']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: []
+    };
+    myChart.setOption(option);
+
+    var setData = [],setName = [];
+    for(var i = 0;i < obj.data.length ;i++){
+        setData.push(
+                {
+                    name:obj.data[i].name,
+                    type:"line",
+                    stack:"总量",
+                    data:obj.data[i].data
+                }
+        );
+        setName.push(obj.data[i].name);
+    }
+    myChart.setOption(option = {
+        legend: {
+            data:setName
+        },
+        series: setData
+    });
+</script>
 </body>
+
 </html>
