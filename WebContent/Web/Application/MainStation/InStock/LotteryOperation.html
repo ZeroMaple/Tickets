@@ -22,13 +22,7 @@
 </head>
 
 <body class="gray-bg">
-<<<<<<< HEAD
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div id="echarts" style="width: 1000px;height:400px;"></div>
-</div>
-=======
 <div id="main" style="width: 100%;height:600px;"></div>
->>>>>>> c6f9457a43a227e79383695d022fabc44edfecec
 
 <!-- 全局js -->
 <script src="../../../Resources/js/jquery.min.js?v=2.1.4"></script>
@@ -49,29 +43,14 @@
 
 <!-- Page-Level Scripts -->
 <script>
-<<<<<<< HEAD
-    var text = '{ "sites" : [' +
-            '[{ "name":"彩票1" , "type":"line" , "stack":"总量" , "data":"120, 132, 101, 134, 90, 230, 210"},' +
-            '{ "name":"彩票2" , "type":"line" , "stack":"总量" , "data":"220, 182, 191, 234, 290, 330, 310" },' +
-            '{ "name":"彩票3" , "type":"line" , "stack":"总量" , "data":"820, 932, 901, 934, 1290, 1330, 1320" } ]';
-
-    obj = JSON.parse(text);
-    exam = Object.keys(text).map(function(k){return text[k]});
-    console.log(exam);
-    var dom = document.getElementById("echarts");
-    var myChart = echarts.init(dom);
-    option = {
-=======
     var text = '{ "data" : [' +
             '{ "name":"Runoob" , "type":"line" , "status":"zz" , "data":[10,20,30,50,70,90,110] },' +
             '{ "name":"Google" , "url":"www.google.com" , "status":"zz" , "data":[10,30,50,70,90,110,130] },' +
             '{ "name":"Taobao" , "url":"www.taobao.com" , "status":"zz" , "data":[70,60,50,40,30,20,10]  } ]}';
 
     obj = JSON.parse(text);
-    console.log(obj);
     var myChart = echarts.init(document.getElementById('main'));
     var option = {
->>>>>>> c6f9457a43a227e79383695d022fabc44edfecec
         title: {
             text: '折线图堆叠'
         },
@@ -79,11 +58,7 @@
             trigger: 'axis'
         },
         legend: {
-<<<<<<< HEAD
-            data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
-=======
             data:['Runoob','Google','Taobao']
->>>>>>> c6f9457a43a227e79383695d022fabc44edfecec
         },
         grid: {
             left: '3%',
@@ -99,23 +74,13 @@
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日']
+            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
         },
         yAxis: {
             type: 'value'
         },
-<<<<<<< HEAD
-        series: col_data
-
-    };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
-</script>
-<script>
-
-=======
         series: []
+
     };
     myChart.setOption(option);
 
@@ -137,7 +102,18 @@
         },
         series: setData
     });
->>>>>>> c6f9457a43a227e79383695d022fabc44edfecec
+    $.ajax({
+        url:"http://Zero:8080/Tickets/Web/Application/adminDataManagement.action",
+        method:"POST",
+        dataType:"jsonp",
+        data:{},
+        success:function (data) {
+            console.log(data);
+        },
+        error:function (err) {
+            console.error(err);
+        }
+    });
 </script>
 </body>
 
