@@ -74,7 +74,7 @@
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日']
+            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
         },
         yAxis: {
             type: 'value'
@@ -83,23 +83,40 @@
     };
     myChart.setOption(option);
 
-    var setData = [],setName = [];
-    for(var i = 0;i < obj.data.length ;i++){
-        setData.push(
-                {
-                    name:obj.data[i].name,
-                    type:"line",
-                    stack:"总量",
-                    data:obj.data[i].data
+    $.ajax({
+        url:"http://Zero:8080/Tickets/Web/Application/userDataManagement.action",
+        method:"POST",
+        dataType:"jsonp",
+        data:{},
+        success:function (data) {
+            console.log(data);
+            var setData = [],setName = [];
+            for(var i = 0;i < data.length;i++){
+                var dataArry = [];
+                for(var j = 1;j < 12;j++){
+                    dataArry.push(data[i][j]);
                 }
-        );
-        setName.push(obj.data[i].name);
-    }
-    myChart.setOption(option = {
-        legend: {
-            data:setName
+                setData.push(
+                        {
+                            name:data[i][0],
+                            type:"line",
+                            stack:"总量",
+                            data:dataArry
+                        }
+                );
+                setName.push(data[i][0]);
+            }
+            console.log(setData);
+            myChart.setOption(option = {
+                legend: {
+                    data:setName
+                },
+                series: setData
+            });
         },
-        series: setData
+        error:function (err) {
+            console.error(err);
+        }
     });
 </script>
 </body>

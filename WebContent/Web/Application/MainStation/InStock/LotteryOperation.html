@@ -84,24 +84,6 @@
     };
     myChart.setOption(option);
 
-    var setData = [],setName = [];
-    for(var i = 0;i < obj.data.length ;i++){
-        setData.push(
-                {
-                    name:obj.data[i].name,
-                    type:"line",
-                    stack:"总量",
-                    data:obj.data[i].data
-                }
-        );
-        setName.push(obj.data[i].name);
-    }
-    myChart.setOption(option = {
-        legend: {
-            data:setName
-        },
-        series: setData
-    });
     $.ajax({
         url:"http://Zero:8080/Tickets/Web/Application/adminDataManagement.action",
         method:"POST",
@@ -109,6 +91,29 @@
         data:{},
         success:function (data) {
             console.log(data);
+            var setData = [],setName = [];
+            for(var i = 0;i < data.length;i++){
+                var dataArry = [];
+                for(var j = 1;j < 12;j++){
+                    dataArry.push(data[i][j]);
+                }
+                setData.push(
+                        {
+                            name:data[i][0],
+                            type:"line",
+                            stack:"总量",
+                            data:dataArry
+                        }
+                );
+                setName.push(data[i][0]);
+            }
+            console.log(setData);
+            myChart.setOption(option = {
+                legend: {
+                    data:setName
+                },
+                series: setData
+            });
         },
         error:function (err) {
             console.error(err);

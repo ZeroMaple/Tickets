@@ -75,8 +75,6 @@
                                 <div class="col-sm-8 control-label">
                                     <select class="col-sm-6 addTicketSelect">
                                         <option value="0"> </option>
-                                        <option value="福利彩票">福利彩票</option>
-                                        <option value="体育彩票">体育彩票</option>
                                     </select>
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-3">
@@ -87,7 +85,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
-                                <button class="btn btn-primary" type="submit" id="add">创建站点</button>
+                                <button class="btn btn-primary" type="submit" id="add">创建订单</button>
                                 <button class="btn" type="submit" id="submit">提交订单</button>
                             </div>
                         </div>
@@ -115,24 +113,29 @@
 
 
 <script>
-//    $.ajax({
-//        url:"http://Zero:8080/Tickets/Web/Application/registered.action",
-//        method:"POST",
-//        dataType:"jsonp",
-//        data:{
-//            userName:userName,
-//            userAccount:userAccount,
-//            userPassWord:userPassWord,
-//            userAddress:userAddress,
-//            userPhone:userPhone
-//        },
-//        success:function (data) {
-//            console.log(data);
-//        },
-//        error:function (err) {
-//            console.error(err);
-//        }
-//    });
+    var ticketList = [];
+    $.ajax({
+        url:"http://Zero:8080/Tickets/Web/Application/listTickets.action",
+        method:"POST",
+        dataType:"jsonp",
+        data:{},
+        success:function (data) {
+            console.log(data);
+            for(var i = 0;i < data.length;i++){
+                var info = {};
+                info.iid = data[i].ticketId;
+                info.iname = data[i].ticketName;
+                ticketList.push(info);
+                $(".addTicketSelect").append(
+                        $("<option></option>").attr("value",data[i].ticketId).html(data[i].ticketName)
+                )
+            }
+            console.log(ticketList);
+        },
+        error:function (err) {
+            console.error(err);
+        }
+    });
     for(var i = 0; i < document.forms.length; i++) {
         document.forms[i].onsubmit = function() {return false;}
     }
@@ -142,8 +145,8 @@
         select = $("<select></select>").attr("class","col-sm-6 addTicketSelect").append(
                 $("<option></option>").attr("value"," ")
         );
-        for(var i = 1;i < 3; i++){
-            option = $("<option></option>").attr("value",i).html("xxx彩票");
+        for(var i = 1;i < ticketList.length; i++){
+            option = $("<option></option>").attr("value",ticketList[i].iid).html(ticketList[i].iname);
             select.append(option);
         }
         $(".addRow").append(
@@ -165,14 +168,29 @@
     $("#submit").click(function () {
         var list = [];
         $(".addRow > div").each(function () {
-            var ticketName = $(this).children("select").val();
-            var ticketNum = $(this).children("div").children("input").val();
+            var ticketId = $(this).children("select").val();
+            var ordersNum = $(this).children("div").children("input").val();
             list.push({
-                ticketName:ticketName,
-                ticketNum:ticketNum
+                ticketId:ticketId,
+                ordersNum:ordersNum
             });
         });
-        console.log(list);
+
+        $.ajax({
+            url:"http://Zero:8080/Tickets/Web/Application/addOrders.action",
+            method:"POST",
+            dataType:"jsonp",
+            data:{
+                OrdersList:list
+            },
+            success:function (data) {
+                console.log(data);
+                window.location.reload();
+            },
+            error:function (err) {
+                console.error(err);
+            }
+        });
     });
 
 //    delete
