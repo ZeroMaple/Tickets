@@ -43,22 +43,22 @@
                             <dl class="dl-horizontal">
 
                                 <dt>负责人：</dt>
-                                <dd id="principal">xxx君n</dd>
+                                <dd id="principal"></dd>
                                 <dt>联系方式：</dt>
-                                <dd id="phone">18888888888</dd>
+                                <dd id="phone"></dd>
                                 <dt>邮箱：</dt>
-                                <dd id="mail">888888888@qq.com</dd>
+                                <dd id="mail"></dd>
                                 <dt>地址：</dt>
-                                <dd id="address">天津市大港区南开大学滨海学院O(∩_∩)O</dd>
+                                <dd id="address"></dd>
                             </dl>
                         </div>
                         <div class="col-sm-7" id="cluster_info">
                             <dl class="dl-horizontal">
 
                                 <dt>最近一次进购：</dt>
-                                <dd>2014年 11月7日 22:03</dd>
+                                <dd id="f_date"></dd>
                                 <dt>创建于：</dt>
-                                <dd id="date">2014年 2月16日 03:01</dd>
+                                <dd id="date"></dd>
                             </dl>
                         </div>
                     </div>
@@ -107,11 +107,14 @@
         success:function (data) {
             console.log(data);
             var time = new Date(data.userDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
+            var f_time = new Date(data.orders.ordersDate).toLocaleString().replace(/年|月/g, ".").replace(/日/g, "  ");
             $("#userName").html(data.userName);
             $("#principal").html(data.userPerson);
             $("#phone").html(data.userPhone);
             $("#address").html(data.userAddress);
             $("#date").html(time);
+            $("#mail").html(data.userEmail);
+            $("#f_date").html(f_time);
         },
         error:function (err) {
             console.error(err);

@@ -15,6 +15,8 @@
     <link href="../../../Resources/css/font-awesome.css?v=4.4.0" rel="stylesheet">
     <link href="../../../Resources/css/animate.css" rel="stylesheet">
     <link href="../../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="../../../Resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
 </head>
 
@@ -113,6 +115,8 @@
     <!-- 全局js -->
     <script src="../../../Resources/js/jquery.min.js?v=2.1.4"></script>
     <script src="../../../Resources/js/bootstrap.min.js?v=3.3.6"></script>
+    <!-- Sweet alert -->
+    <script src="../../../Resources/js/plugins/sweetalert/sweetalert.min.js"></script>
 
     <!-- 自定义js -->
     <script src="../../../Resources/js/content.js?v=1.0.0"></script>
@@ -129,8 +133,16 @@
             var userPhone = $("#phone").val();
             var userPerson = $("#principal").val();
             var userEmail = $("#email").val();
-            if(userName == "" || userAccount == "" || userPassWord == "" || userAddress == "" || userPhone == ""){
-                return;
+            if(userPhone.split('').length != 11){
+                swal({
+                    title: "手机号有误",
+                    text: "请确认填写的手机号是否为11位！"
+                });
+            }else if(userName == "" || userAccount == "" || userPassWord == "" || userAddress == "" || userPhone == ""){
+                swal({
+                    title: "上传的信息不可为空",
+                    text: "请准确填写表格中的信息，确认无误后点击创建！"
+                });
             }else {
                 $.ajax({
                     url:"http://Zero:8080/Tickets/Web/Application/registered.action",
@@ -147,6 +159,18 @@
                     },
                     success:function (data) {
                         console.log(data);
+                        if(data){
+                            swal({
+                                title: "成功",
+                                text: "您已经成功创建一个新的站点",
+                                type: "success"
+                            }),function () {
+                                window.location.reload();
+                            };
+                        }else {
+                            swal("失败", "请重新检查您上传的信息！", "error");
+                        }
+
                     },
                     error:function (err) {
                         console.error(err);

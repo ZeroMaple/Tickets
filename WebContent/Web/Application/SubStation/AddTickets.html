@@ -15,6 +15,8 @@
     <link href="../../Resources/css/font-awesome.css?v=4.4.0" rel="stylesheet">
     <link href="../../Resources/css/animate.css" rel="stylesheet">
     <link href="../../Resources/css/style.css?v=4.1.0" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="../../Resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
 </head>
 <style>
@@ -111,6 +113,9 @@
 
 <script src="../../Resources/js/demo/form-validate-demo.js"></script>
 
+<!-- Sweet alert -->
+<script src="../../Resources/js/plugins/sweetalert/sweetalert.min.js"></script>
+
 
 <script>
     var ticketList = [];
@@ -167,30 +172,50 @@
 //    submit
     $("#submit").click(function () {
         var list = [];
+        var status ='';
         $(".addRow > div").each(function () {
             var ticketId = $(this).children("select").val();
             var ordersNum = $(this).children("div").children("input").val();
+            if(ticketId == 0 || ordersNum == 0){
+                status = "null";
+            }
             list.push({
                 ticketId:ticketId,
                 ordersNum:ordersNum
             });
         });
-
-        $.ajax({
-            url:"http://Zero:8080/Tickets/Web/Application/addOrders.action",
-            method:"POST",
-            dataType:"jsonp",
-            data:{
-                OrdersList:list
-            },
-            success:function (data) {
-                console.log(data);
-                window.location.reload();
-            },
-            error:function (err) {
-                console.error(err);
-            }
-        });
+        if(status == "null"){
+            swal({
+                title: "您还有信息尚未填写",
+                text: "请填写完信息在店家确认！"
+            });
+        }else {
+            $.ajax({
+                url:"http://Zero:8080/Tickets/Web/Application/addOrders.action",
+                method:"POST",
+                dataType:"jsonp",
+                data:{
+                    OrdersList:list
+                },
+                success:function (data) {
+                    console.log(data);
+                    if(data){
+                        swal({
+                            title: "成功",
+                            text: "您已经成功提交订单",
+                            type: "success"
+                        }),function () {
+                            window.location.reload();
+                        };
+                    }else {
+                        swal("失败", "请重新检查您提交的信息！", "error");
+                    }
+                },
+                error:function (err) {
+                    console.error(err);
+                }
+            });
+        }
     });
 
 //    delete
